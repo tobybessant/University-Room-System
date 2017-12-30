@@ -4,11 +4,12 @@
  * and open the template in the editor.
  */
 package universityroomsystem.areas;
-
+import universityroomsystem.states.States.State;
 /**
  *
  * @author tobybessant
  */
-public interface IArea {
-    
+public interface IAreaState {
+    Boolean setState(State s);
+    String getDetails();
 }

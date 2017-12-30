@@ -5,11 +5,48 @@
  */
 package universityroomsystem.areas;
 
+import universityroomsystem.states.States.State;
+
 /**
  *
  * @author tobybessant
  */
-class Room {
+public abstract class Room implements IAreaState, IRoom {
+    
     private int _roomCode;
+    private State _roomState;
+    private RoomTypes.RoomType _roomType;
+    
+    public Room(int code){ 
+        this._roomCode = code;
+    }
+    
+    public int getRoomCode() {
+        return this._roomCode;
+    }
+
+    public void setRoomCode(int _roomCode) {
+        this._roomCode = _roomCode;
+    }
+
+    public RoomTypes.RoomType getRoomType() {
+        return _roomType;
+    }
+
+    protected void setRoomType(RoomTypes.RoomType _roomType) {
+        this._roomType = _roomType;
+    }
+    
+
+    @Override
+    public Boolean setState(State s) {
+        Boolean result = false;
+        if(s != null) {
+           this._roomState = s;
+           result = true;
+        }
+        return result;
+    }
+    
     
 }
