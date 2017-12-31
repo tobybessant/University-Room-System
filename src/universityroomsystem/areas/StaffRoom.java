@@ -7,25 +7,36 @@ package universityroomsystem.areas;
 
 import universityroomsystem.cards.Card;
 import universityroomsystem.areas.RoomTypes;
+import universityroomsystem.states.NormalState;
+import universityroomsystem.states.States;
 /**
  *
  * @author tobybessant
  */
 public class StaffRoom extends Room {
     
-    public StaffRoom(int code){
+    public StaffRoom(String code){
         super(code);
         this.setRoomType(RoomTypes.RoomType.STAFF_ROOM);
+        this.setState(new NormalState());
     }
     
     @Override
     public String getDetails() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.getRoomCode();
     }
-
+    
+    @Override
+    public States getState() {
+        return this._roomState;
+    }
+    
     @Override
     public Boolean Access(Card c) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        Boolean result = this.getState().Access(this, c);
+        return result;
+        
     }
     
 }

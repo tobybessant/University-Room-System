@@ -6,7 +6,7 @@
 package universityroomsystem.areas;
 
 import java.util.ArrayList;
-import universityroomsystem.states.States.State;
+import universityroomsystem.states.States;
 
 /**
  *
@@ -15,7 +15,7 @@ import universityroomsystem.states.States.State;
 public class Floor implements IAreaState {
         private int _floorNumber;
     private ArrayList<Room> _roomList;
-    private State _floorState;
+    private States _floorState;
     
     public Floor (int floorNumber){
         this._floorNumber = floorNumber;
@@ -30,7 +30,11 @@ public class Floor implements IAreaState {
  
     public Boolean addRoom(Room r){
         Boolean result = false;
-        if(r != null && !this._roomList.contains(r)){
+        if(this._roomList != null && !this._roomList.contains(r)){
+            this._roomList.add(r);
+            result = true;
+        } else {
+            this._roomList = new ArrayList<Room>();
             this._roomList.add(r);
             result = true;
         }
@@ -46,7 +50,7 @@ public class Floor implements IAreaState {
     }
     
     @Override
-    public Boolean setState(State s) {
+    public Boolean setState(States s) {
         Boolean result = false;
         if(s != null) {
             for(int i = 0; i < this._roomList.size(); i++) {
@@ -57,12 +61,14 @@ public class Floor implements IAreaState {
         }
         return result;
     }
-
+    
+    @Override
+    public States getState() {
+        return this._floorState;
+    }
+    
     @Override
     public String getDetails() {
         return Integer.toString(this._floorNumber);
-    }
-    
-    
-   
+    }  
 }

@@ -36,5 +36,14 @@ public abstract class Card {
         return _role;
     }
     
+    protected Boolean setRole(Role r){
+        Boolean result = false;
+        if(r != null){
+            this._role = r;
+            result = true;
+        }
+        return result;
+    }
+    
     
 }

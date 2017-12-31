@@ -5,7 +5,7 @@
  */
 package universityroomsystem.areas;
 
-import universityroomsystem.states.States.State;
+import universityroomsystem.states.States;
 
 /**
  *
@@ -13,19 +13,20 @@ import universityroomsystem.states.States.State;
  */
 public abstract class Room implements IAreaState, IRoom {
     
-    private int _roomCode;
-    private State _roomState;
+    private String _roomCode;
+    protected States _roomState;
     private RoomTypes.RoomType _roomType;
     
-    public Room(int code){ 
+    public Room(String code){ 
         this._roomCode = code;
+        this._roomState = null;
     }
     
-    public int getRoomCode() {
+    public String getRoomCode() {
         return this._roomCode;
     }
 
-    public void setRoomCode(int _roomCode) {
+    public void setRoomCode(String _roomCode) {
         this._roomCode = _roomCode;
     }
 
@@ -35,11 +36,10 @@ public abstract class Room implements IAreaState, IRoom {
 
     protected void setRoomType(RoomTypes.RoomType _roomType) {
         this._roomType = _roomType;
-    }
-    
+    }  
 
     @Override
-    public Boolean setState(State s) {
+    public Boolean setState(States s) {
         Boolean result = false;
         if(s != null) {
            this._roomState = s;
@@ -48,5 +48,10 @@ public abstract class Room implements IAreaState, IRoom {
         return result;
     }
     
+    @Override
+    public States getState() {
+        return this._roomState;
+    }
     
 }
+;

@@ -7,7 +7,7 @@ package universityroomsystem.areas;
 
 import java.util.ArrayList;
 import java.util.List;
-import universityroomsystem.states.States.State;
+import universityroomsystem.states.States;
 
 /**
  *
@@ -16,13 +16,10 @@ import universityroomsystem.states.States.State;
 public class Campus implements IAreaState {
     private String _campusName;
     private ArrayList<Building> _buildingList;
-    private State _campusState;
+    private States _campusState;
 
     public Campus(String name) {
         this._campusName = name;
-        if(this._buildingList == null){
-            this._buildingList = new ArrayList<Building>();
-        }
     }
     
     public String getCampusName() {
@@ -56,7 +53,7 @@ public class Campus implements IAreaState {
     }
     
     @Override
-    public Boolean setState(State s) {
+    public Boolean setState(States s) {
         Boolean result = false;
         if(s != null) {
             for(int i = 0; i < this._buildingList.size(); i++) {
@@ -67,9 +64,15 @@ public class Campus implements IAreaState {
         }
         return result;
     }
-
+    
+    @Override
+    public States getState() {
+        return this._campusState;
+    }
+    
     @Override
     public String getDetails() {
+
         return this._campusName;
     }
     

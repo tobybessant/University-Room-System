@@ -16,7 +16,7 @@ public class Cleaner extends Card {
     private Roles.Role _role;
     
     public Cleaner(String name) {
-        this._name = name;
-        this._role = Roles.Role.CLEANER;
+        this.setName(name);
+        this.setRole(Roles.Role.CLEANER);
     }
 }

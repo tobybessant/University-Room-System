@@ -5,13 +5,13 @@
  */
 package universityroomsystem.states;
 
+import universityroomsystem.areas.Room;
+import universityroomsystem.cards.Card;
+
 /**
  *
  * @author tobybessant
  */
-public class States {
-    public enum State {
-        NORMAL,
-        EMERGECY
-    }
+public interface States {
+    public Boolean Access(Room s, Card c);
 }
