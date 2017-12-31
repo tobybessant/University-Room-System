@@ -3,18 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package universityroomsystem.areas;
+package urs.cards;
 
 /**
  *
  * @author tobybessant
  */
-public class RoomTypes {
-    public enum RoomType {
-        LECTURE_HALL, 
-        STUDENT_LAB,
-        RESERACH_LAB,
-        STAFF_ROOM,
-        SECURE_ROOM
+public class Roles {
+    
+    public enum Role {
+        VISITOR,
+        STAFF,
+        STUDENT,
+        CLEANER,
+        MANAGER,
+        SECURITY,
+        RESPONDER,
     }
+    
 }

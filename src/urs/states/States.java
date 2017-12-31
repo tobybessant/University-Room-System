@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package universityroomsystem.states;
+package urs.states;
 
-import universityroomsystem.areas.Room;
-import universityroomsystem.cards.Card;
+import urs.areas.Room;
+import urs.cards.Card;
 
 /**
  *
@@ -14,4 +14,5 @@ import universityroomsystem.cards.Card;
  */
 public interface States {
     public Boolean Access(Room s, Card c);
+    public String toString();
 }

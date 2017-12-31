@@ -3,12 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package universityroomsystem.areas;
-import universityroomsystem.cards.Card;
+package urs.areas;
+
 /**
  *
  * @author tobybessant
  */
-public interface IRoom {
-    Boolean Access(Card c);
+public class RoomTypes {
+    public enum RoomType {
+        LECTURE_HALL, 
+        STUDENT_LAB,
+        RESEARCH_LAB,
+        STAFF_ROOM,
+        SECURE_ROOM
+    }
 }

@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package universityroomsystem.areas;
+package urs.areas;
 
 import java.util.ArrayList;
-import universityroomsystem.states.States;
+import urs.states.NormalState;
+import urs.states.States;
 
 /**
  *
@@ -21,6 +22,7 @@ public class Building implements IAreaState {
     public Building(String name, String code) {
         this._buildingName = name;
         this._buildingCode = code;
+        this._buildingState = new NormalState();
     }
     
     public String getBuildingName() {

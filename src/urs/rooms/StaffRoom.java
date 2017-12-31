@@ -3,12 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package universityroomsystem.areas;
+package urs.rooms;
 
-import universityroomsystem.cards.Card;
-import universityroomsystem.areas.RoomTypes;
-import universityroomsystem.states.NormalState;
-import universityroomsystem.states.States;
+import urs.areas.Room;
+import urs.cards.Card;
+import urs.areas.RoomTypes;
+import urs.areas.RoomTypes;
+import urs.states.NormalState;
+import urs.states.States;
 /**
  *
  * @author tobybessant
@@ -20,11 +22,7 @@ public class StaffRoom extends Room {
         this.setRoomType(RoomTypes.RoomType.STAFF_ROOM);
         this.setState(new NormalState());
     }
-    
-    @Override
-    public String getDetails() {
-        return this.getRoomCode();
-    }
+
     
     @Override
     public States getState() {

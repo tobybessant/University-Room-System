@@ -6,11 +6,16 @@
 package universityroomsystem;
 
 
+import urs.areas.Floor;
+import urs.areas.Campus;
+import urs.areas.Room;
+import urs.areas.Building;
+import urs.cards.Manager;
+import urs.cards.Card;
+import urs.states.EmergencyState;
+import urs.rooms.StaffRoom;
 import java.util.HashSet;
 import java.util.Set;
-import universityroomsystem.cards.*;
-import universityroomsystem.states.*;
-import universityroomsystem.areas.*;
 /**
  *
  * @author tobybessant
@@ -36,7 +41,7 @@ public class UniversityRoomSystem {
         
         
 
-        Card cleaner = new Cleaner("John Doe");
+        Card manager = new Manager("John Doe");
         
         plymouth.addBuilding(babbage);
         babbage.addFloor(babbage01);
@@ -44,15 +49,15 @@ public class UniversityRoomSystem {
         babbage01.addRoom(babbageStaffRoom_Ground);
         babbage02.addRoom(babbageStaffRoom_First);
         
-        System.out.println(babbageStaffRoom_First.getState());
+        System.out.println(plymouth.getState().toString());
         
-        System.out.println(babbageStaffRoom_First.Access(cleaner).toString());
+        System.out.println("Access granted: " + babbageStaffRoom_First.Access(manager).toString());
         
-        babbageStaffRoom_First.setState(new EmergencyState());
+        plymouth.setState(new EmergencyState());
         
-        System.out.println(babbageStaffRoom_First.getState());
+        System.out.println(babbageStaffRoom_First.getState().toString());
         
-        System.out.println(babbageStaffRoom_First.Access(cleaner).toString());
+        System.out.println("Access granted: " + babbageStaffRoom_First.Access(manager).toString());
         
     }
     

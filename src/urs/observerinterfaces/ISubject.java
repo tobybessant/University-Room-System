@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package universityroomsystem.areas;
-import universityroomsystem.states.States;
+package urs.observerinterfaces;
+
 /**
  *
  * @author tobybessant
  */
-public interface IAreaState {
-    Boolean setState(States s);
-    States getState();
-    String getDetails();
+public interface ISubject {
+    Boolean registerObserver();
+    Boolean removeObserver();
+    void notifyObservers();
 }

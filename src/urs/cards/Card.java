@@ -3,13 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package universityroomsystem.cards;
-import universityroomsystem.cards.Roles.*;
+package urs.cards;
+import urs.cards.Roles.*;
+import urs.observerinterfaces.ISubject;
 /**
  *
  * @author tobybessant
  */
-public abstract class Card {
+public abstract class Card implements ISubject{
     
     private String _name;
     private int CardID;

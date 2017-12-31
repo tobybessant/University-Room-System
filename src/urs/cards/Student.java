@@ -3,20 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package universityroomsystem.cards;
+package urs.cards;
 
 /**
  *
  * @author tobybessant
  */
-public class Manager extends Card {
+public class Student extends Card {
     
     private String _name;
     private int CardID;
     private Roles.Role _role;
     
-    public Manager(String name) {
-        this._name = name;
-        this._role = Roles.Role.MANAGER;
+    public Student(String name) {
+        this.setName(name);
+        this.setRole(Roles.Role.STUDENT);
     }
 }

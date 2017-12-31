@@ -3,22 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package universityroomsystem.cards;
-
+package urs.areas;
+import urs.cards.Card;
 /**
  *
  * @author tobybessant
  */
-public class Roles {
-    
-    public enum Role {
-        VISITOR,
-        STAFF,
-        STUDENT,
-        CLEANER,
-        MANAGER,
-        SECURITY,
-        RESPONDER,
-    }
-    
+public interface IRoom {
+    Boolean Access(Card c);
 }

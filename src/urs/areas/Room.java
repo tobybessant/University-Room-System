@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package universityroomsystem.areas;
+package urs.areas;
 
-import universityroomsystem.states.States;
+import urs.observerinterfaces.ISubject;
+import urs.states.States;
 
 /**
  *
@@ -13,9 +14,9 @@ import universityroomsystem.states.States;
  */
 public abstract class Room implements IAreaState, IRoom {
     
-    private String _roomCode;
+    protected String _roomCode;
     protected States _roomState;
-    private RoomTypes.RoomType _roomType;
+    protected RoomTypes.RoomType _roomType;
     
     public Room(String code){ 
         this._roomCode = code;
@@ -51,6 +52,14 @@ public abstract class Room implements IAreaState, IRoom {
     @Override
     public States getState() {
         return this._roomState;
+    }
+    
+    @Override
+    public String getDetails(){
+        
+        String output = this._roomCode + " (" + this._roomType + ") " + ": " + this._roomState;
+        
+        return output;
     }
     
 }
