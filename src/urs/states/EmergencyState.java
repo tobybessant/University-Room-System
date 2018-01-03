@@ -33,16 +33,6 @@ public class EmergencyState implements States {
         return result;
     }
     
-    private Boolean SecurityAccess() {
-        return true;
-    }
-
-    private Boolean ResponderAccess() {
-        Boolean result = false;
-
-        return result;
-    }
-    
     @Override
     public String toString(){
         return "Emergency state";

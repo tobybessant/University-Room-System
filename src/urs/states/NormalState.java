@@ -5,6 +5,8 @@
  */
 package urs.states;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import urs.areas.Room;
 import urs.cards.Card;
 
@@ -17,61 +19,27 @@ public class NormalState implements States {
     @Override
     public Boolean Access(Room r, Card c) {
         Boolean result = false;
-
-        switch (c.getRole()) {
-            case VISITOR:
-                result = VisitorAccess();
-                break;
-            case STAFF:
-                result = StaffAccess();
-                break;
-            case STUDENT:
-                result = StudentAccess();
-                break;
-            case CLEANER:
-                result = CleanerAccess();
-                break;
-            case MANAGER:
-                result = true;
-                break;
-            case SECURITY:
-                result = true;
-                break;
-        }
-
+        
+        result = (r.IsAllowed(c) && ValidDate(c)) ;
+        
         return result;
-
-    }
-
-    private Boolean VisitorAccess() {
-        Boolean result = false;
-
-        return result;
-    }
-
-    private Boolean StaffAccess() {
-        Boolean result = false;
-
-        return result;
-    }
-
-    private Boolean StudentAccess() {
-        Boolean result = false;
-
-        return result;
-    }
-
-    private Boolean CleanerAccess() {
-        return true;
-    }
-
-    private Boolean SecurityAccess() {
-        return true;
     }
 
     @Override
     public String toString(){
         return "Normal state";
         
+    }
+    
+    private Boolean ValidDate(Card c)
+    {
+        
+      Date d = new Date();
+      SimpleDateFormat f = new SimpleDateFormat("HH:mm:ss");
+      String currentDate = f.format(d);
+      
+      Boolean result = false;
+
+      return result;
     }
 }

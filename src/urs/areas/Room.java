@@ -5,6 +5,9 @@
  */
 package urs.areas;
 
+import java.util.ArrayList;
+import urs.cards.Card;
+import urs.cards.Roles;
 import urs.observerinterfaces.IObserver;
 import urs.rooms.RoomTypes;
 import urs.observerinterfaces.ISubject;
@@ -20,7 +23,7 @@ public abstract class Room implements ISubject, IAreaState, IRoom  {
     protected String _roomCode;
     protected States _roomState;
     protected RoomTypes.RoomType _roomType;
-    
+    protected ArrayList<Roles.Role> _permittedCards = new ArrayList<>();
     private final ISubject _subject = new SubjectImplementation();
     
     public Room(String code){ 
@@ -43,7 +46,9 @@ public abstract class Room implements ISubject, IAreaState, IRoom  {
     protected void setRoomType(RoomTypes.RoomType _roomType) {
         this._roomType = _roomType;
     }  
-
+    
+    public abstract Boolean IsAllowed(Card c);
+    
     @Override
     public Boolean setState(States s) {
         Boolean result = false;

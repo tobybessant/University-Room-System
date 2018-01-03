@@ -5,8 +5,10 @@
  */
 package urs.rooms;
 
+import java.util.ArrayList;
 import urs.areas.Room;
 import urs.cards.Card;
+import urs.cards.Roles.Role;
 import urs.states.NormalState;
 import urs.states.States;
 /**
@@ -15,10 +17,17 @@ import urs.states.States;
  */
 public class StaffRoom extends Room {
     
+    
+    
     public StaffRoom(String code){
         super(code);
         this.setRoomType(RoomTypes.RoomType.STAFF_ROOM);
         this.setState(new NormalState());
+        
+        this._permittedCards.add(Role.STAFF);
+        this._permittedCards.add(Role.MANAGER);
+        this._permittedCards.add(Role.CLEANER);
+        this._permittedCards.add(Role.SECURITY);
     }
 
     
@@ -33,6 +42,11 @@ public class StaffRoom extends Room {
         Boolean result = this.getState().Access(this, c);
         return result;
         
+    }
+
+    @Override
+    public Boolean IsAllowed(Card c) {
+        return this._permittedCards.contains(c);
     }
     
 }
