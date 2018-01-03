@@ -10,7 +10,7 @@ package urs.observerinterfaces;
  * @author tobybessant
  */
 public interface ISubject {
-    Boolean registerObserver();
-    Boolean removeObserver();
+    Boolean registerObserver(IObserver o);
+    Boolean removeObserver(IObserver o);
     void notifyObservers();
 }

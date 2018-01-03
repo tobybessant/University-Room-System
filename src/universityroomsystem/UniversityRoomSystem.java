@@ -27,37 +27,8 @@ public class UniversityRoomSystem {
      */
     public static void main(String[] args) {
         
-        
-        
-        Campus plymouth = new Campus("Plymouth University");
-        
-        Building babbage = new Building("Babbage", "BGB");
-        
-        Floor babbage01 = new Floor(0); 
-        Room babbageStaffRoom_Ground = new StaffRoom("01");
-        
-        Floor babbage02 = new Floor(1);
-        Room babbageStaffRoom_First = new StaffRoom("01");
-        
-        
-
-        Card manager = new Manager("John Doe");
-        
-        plymouth.addBuilding(babbage);
-        babbage.addFloor(babbage01);
-        babbage.addFloor(babbage02);
-        babbage01.addRoom(babbageStaffRoom_Ground);
-        babbage02.addRoom(babbageStaffRoom_First);
-        
-        System.out.println(plymouth.getState().toString());
-        
-        System.out.println("Access granted: " + babbageStaffRoom_First.Access(manager).toString());
-        
-        plymouth.setState(new EmergencyState());
-        
-        System.out.println(babbageStaffRoom_First.getState().toString());
-        
-        System.out.println("Access granted: " + babbageStaffRoom_First.Access(manager).toString());
+        TestHarness harness = new TestHarness();
+        harness.ExecuteTests();
         
     }
     

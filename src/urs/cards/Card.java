@@ -5,12 +5,11 @@
  */
 package urs.cards;
 import urs.cards.Roles.*;
-import urs.observerinterfaces.ISubject;
 /**
  *
  * @author tobybessant
  */
-public abstract class Card implements ISubject{
+public abstract class Card {
     
     private String _name;
     private int CardID;

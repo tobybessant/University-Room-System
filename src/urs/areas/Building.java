@@ -6,6 +6,9 @@
 package urs.areas;
 
 import java.util.ArrayList;
+import urs.observerinterfaces.IObserver;
+import urs.observerinterfaces.ISubject;
+import urs.observerinterfaces.SubjectImplementation;
 import urs.states.NormalState;
 import urs.states.States;
 
@@ -13,16 +16,19 @@ import urs.states.States;
  *
  * @author tobybessant
  */
-public class Building implements IAreaState {
+public class Building implements IAreaState, ISubject, IObserver {
     private String _buildingName;
     private String _buildingCode;
-    private ArrayList<Floor> _floorList;
     private States _buildingState;
+    
+    private ArrayList<Floor> _floorList;
+    private final ISubject _subject = new SubjectImplementation();
     
     public Building(String name, String code) {
         this._buildingName = name;
         this._buildingCode = code;
-        this._buildingState = new NormalState();
+        this._floorList = new ArrayList<>();
+        this._buildingState = new NormalState();        
     }
     
     public String getBuildingName() {
@@ -43,22 +49,33 @@ public class Building implements IAreaState {
     
     public Boolean addFloor(Floor f){
         Boolean result = false;
-        if(this._floorList != null && !this._floorList.contains(f)){
-            this._floorList.add(f);
-            result = true;
-        } else {
-            this._floorList = new ArrayList<Floor>();
-            this._floorList.add(f);
-            result = true;
+        if (null != f)
+        {
+            if (!this._floorList.contains(f))
+            {
+                result = this._floorList.add(f);
+                if (result)
+                {
+                    f.registerObserver(this);
+                    this.notifyObservers();
+                }
+            }
         }
         return result;
     }
     
     public Boolean removeFloor(Floor f) {
         Boolean result = false;
-        if(f != null && this._floorList.contains(f)){
-            this._floorList.remove(f);
-            result = true;
+        if (null != f)
+        {
+            if (null != _floorList && this._floorList.size() > 0)
+            {
+                result = this._floorList.remove(f);
+                if(result){
+                    f.removeObserver(this);
+                    this.notifyObservers();
+                }
+            }
         }
         return result;
     }
@@ -77,12 +94,29 @@ public class Building implements IAreaState {
     }
 
     @Override
-    public String getDetails() {
-        return this._buildingName;
+    public States getState() {
+        return this._buildingState;
     }
 
     @Override
-    public States getState() {
-        return this._buildingState;
+    public Boolean registerObserver(IObserver o) {
+        Boolean result =this._subject.registerObserver(o);
+        return result;
+    }
+
+    @Override
+    public Boolean removeObserver(IObserver o) {
+        Boolean result = this._subject.removeObserver(o);
+        return result;
+    }
+
+    @Override
+    public void notifyObservers() {
+        this._subject.notifyObservers();
+    }
+
+    @Override
+    public void Update() {
+        this.notifyObservers();
     }
 }

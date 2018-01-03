@@ -12,5 +12,5 @@ import urs.states.States;
 public interface IAreaState {
     Boolean setState(States s);
     States getState();
-    String getDetails();
+    
 }

@@ -5,18 +5,23 @@
  */
 package urs.areas;
 
+import urs.observerinterfaces.IObserver;
+import urs.rooms.RoomTypes;
 import urs.observerinterfaces.ISubject;
+import urs.observerinterfaces.SubjectImplementation;
 import urs.states.States;
 
 /**
  *
  * @author tobybessant
  */
-public abstract class Room implements IAreaState, IRoom {
+public abstract class Room implements ISubject, IAreaState, IRoom  {
     
     protected String _roomCode;
     protected States _roomState;
     protected RoomTypes.RoomType _roomType;
+    
+    private final ISubject _subject = new SubjectImplementation();
     
     public Room(String code){ 
         this._roomCode = code;
@@ -53,14 +58,20 @@ public abstract class Room implements IAreaState, IRoom {
     public States getState() {
         return this._roomState;
     }
-    
+
     @Override
-    public String getDetails(){
-        
-        String output = this._roomCode + " (" + this._roomType + ") " + ": " + this._roomState;
-        
-        return output;
+    public Boolean registerObserver(IObserver o) {
+        return this._subject.registerObserver(o);
+    }
+
+    @Override
+    public Boolean removeObserver(IObserver o) {
+        return this._subject.removeObserver(o);
+    }
+
+    @Override
+    public void notifyObservers() {
+        this._subject.notifyObservers();
     }
     
 }
-;

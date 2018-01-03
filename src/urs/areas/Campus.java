@@ -7,6 +7,9 @@ package urs.areas;
 
 import java.util.ArrayList;
 import java.util.List;
+import urs.observerinterfaces.IObserver;
+import urs.observerinterfaces.ISubject;
+import urs.observerinterfaces.SubjectImplementation;
 import urs.states.NormalState;
 import urs.states.States;
 
@@ -14,14 +17,17 @@ import urs.states.States;
  *
  * @author tobybessant
  */
-public class Campus implements IAreaState {
+public class Campus implements IAreaState, ISubject, IObserver {
     private String _campusName;
-    private ArrayList<Building> _buildingList;
     private States _campusState;
-
+    
+    private ArrayList<Building> _buildingList;
+    private final ISubject subject = new SubjectImplementation();
+    
     public Campus(String name) {
         this._campusName = name;
         this._campusState = new NormalState();
+        this._buildingList = new ArrayList<>();
     }
     
     public String getCampusName() {
@@ -34,22 +40,43 @@ public class Campus implements IAreaState {
     
     public Boolean addBuilding(Building b){
         Boolean result = false;
-        
-        if(this._buildingList != null && !this._buildingList.contains(b)){
-            this._buildingList.add(b);
-            result = true;
-        } else {
-            this._buildingList = new ArrayList<Building>();
-            this._buildingList.add(b);
-            result = true;
+        if (null != b)
+        {
+            if (!this._buildingList.contains(b))
+            {
+                result = this._buildingList.add(b);
+                if (result)
+                {
+                    b.registerObserver(this);
+                    this.notifyObservers();
+                }
+            }
         }
         return result;
     }
+    
     public Boolean removeBuilding(Building b) {
         Boolean result = false;
-        if(b != null && this._buildingList.contains(b)){
-            this._buildingList.remove(b);
-            result = true;
+        if (null != b)
+        {
+            if (null != _buildingList && this._buildingList.size() > 0)
+            {
+                result = this._buildingList.remove(b);
+                if(result){
+                    b.removeObserver(this);
+                    this.notifyObservers();
+                }
+            }
+        }
+        return result;
+    }
+    
+    public ArrayList<Building> getBuildingList(){
+        
+        ArrayList<Building> result = new ArrayList<>();
+        for (Building b : this._buildingList)
+        {
+            result.add(b);
         }
         return result;
     }
@@ -71,12 +98,29 @@ public class Campus implements IAreaState {
     public States getState() {
         return this._campusState;
     }
-    
-    @Override
-    public String getDetails() {
 
-        return this._campusName;
+    @Override
+    public Boolean registerObserver(IObserver o) {
+        Boolean result = this.subject.registerObserver(o);
+        return result;
     }
+
+    @Override
+    public Boolean removeObserver(IObserver o) {
+        Boolean result = this.subject.removeObserver(o);
+        return result;
+    }
+
+    @Override
+    public void notifyObservers() {
+        this.subject.notifyObservers();
+    }
+
+    @Override
+    public void Update() {
+        this.notifyObservers();
+    }
+    
     
     
 }

@@ -7,8 +7,6 @@ package urs.rooms;
 
 import urs.areas.Room;
 import urs.cards.Card;
-import urs.areas.RoomTypes;
-import urs.areas.RoomTypes;
 import urs.states.NormalState;
 import urs.states.States;
 /**
