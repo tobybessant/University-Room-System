@@ -6,6 +6,7 @@
 package urs.states;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
 import java.util.Date;
 import urs.areas.Room;
 import urs.cards.Card;
@@ -33,12 +34,12 @@ public class NormalState implements States {
     
     private Boolean ValidDate(Card c)
     {
-        
-      Date d = new Date();
-      SimpleDateFormat f = new SimpleDateFormat("HH:mm:ss");
-      String currentDate = f.format(d);
-      
       Boolean result = false;
+      LocalTime t = LocalTime.now();
+      if(c.isTimeRestricted()){
+          c.timeCompare(t);
+          result = true;
+      }
 
       return result;
     }

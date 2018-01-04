@@ -4,7 +4,10 @@
  * and open the template in the editor.
  */
 package urs.cards;
+import java.time.LocalTime;
+import java.util.Date;
 import urs.cards.Roles.*;
+import urs.timerestriction.TimeRestriction;
 /**
  *
  * @author tobybessant
@@ -14,6 +17,10 @@ public abstract class Card {
     private String _name;
     private int CardID;
     private Role _role;
+    protected TimeRestriction _tr = new TimeRestriction();
+    
+    
+    private Boolean _timeRestricted = true;
     
     public String getName() {
         return _name;
@@ -45,5 +52,25 @@ public abstract class Card {
         return result;
     }
     
+    public Boolean isTimeRestricted() {
+        return this._tr.getTimeRestricted();
+    }
     
+    public LocalTime getStartTime(){
+        return this._tr.getStartTime();
+    }
+    public LocalTime getEndTime() {
+        return this._tr.getEndTime();
+    }
+    public Boolean timeCompare(LocalTime currTime){
+        
+        Boolean result = false;  
+        
+        if((currTime.isAfter(this.getStartTime())) && (currTime.isBefore(this.getEndTime()))) {
+              result = true;
+              
+          }
+        
+        return result;
+    }
 }

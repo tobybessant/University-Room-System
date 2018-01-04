@@ -5,6 +5,8 @@
  */
 package urs.cards;
 
+import java.time.LocalTime;
+
 /**
  *
  * @author tobybessant
@@ -18,5 +20,8 @@ public class Student extends Card {
     public Student(String name) {
         this.setName(name);
         this.setRole(Roles.Role.STUDENT);
+        
+        this._tr.setStartTime(LocalTime.of(8, 30, 00));
+        this._tr.setEndTime(LocalTime.of(22, 00, 00));
     }
 }
