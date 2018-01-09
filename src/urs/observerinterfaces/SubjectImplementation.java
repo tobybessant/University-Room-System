@@ -50,12 +50,12 @@ public class SubjectImplementation implements ISubject {
     }
 
     @Override
-    public void notifyObservers() {
+    public void notifyObservers(String buildingType) {
         if (this._observerList != null && this._observerList.size() > 0)
         {
             for (IObserver currentObserver : this._observerList)
             {
-                currentObserver.Update();
+                currentObserver.Update(buildingType);
             }
         }
     }

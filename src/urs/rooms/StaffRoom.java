@@ -19,8 +19,8 @@ public class StaffRoom extends Room {
     
     
     
-    public StaffRoom(String code){
-        super(code);
+    public StaffRoom(int floorNumber, String code){
+        super( floorNumber, code);
         this.setRoomType(RoomTypes.RoomType.STAFF_ROOM);
         this.setState(new NormalState());
         

@@ -7,15 +7,17 @@ package universityroomsystem;
 
 import urs.areas.Building;
 import urs.areas.Campus;
-import urs.areas.Floor;
 import urs.areas.Room;
 import urs.cards.Card;
 import urs.cards.Cleaner;
 import urs.cards.Manager;
+import urs.cards.Responder;
 import urs.cards.Security;
 import urs.cards.Staff;
 import urs.observerinterfaces.IObserver;
 import urs.rooms.LectureHall;
+import urs.rooms.RoomTypes;
+import urs.rooms.RoomTypes.RoomType;
 import urs.states.EmergencyState;
 
 /**
@@ -31,47 +33,42 @@ public class TestHarness {
         System.out.println("Campus created!");
         
         System.out.println("Creating a new ob & registering with campus");
-        AnObserver campusOb = new AnObserver();
-        plymouth.registerObserver(campusOb);
+        AnObserver Ob = new AnObserver();
+        plymouth.registerObserver(Ob);
         System.out.println("Ob registered with campus");
         
         System.out.println("Creating & adding a new building");
-        Building babbage = new Building("Babbage", "BGB");
-        plymouth.addBuilding(babbage);
+        plymouth.addBuilding("Babbage", "BGB");
         System.out.println("Building created & added");
-        
-        System.out.println("Creating a new ob & registering with building");
-        AnObserver buildingOb = new AnObserver();
-        babbage.registerObserver(buildingOb);
+ 
+        plymouth.getBuilding("Babbage").registerObserver(plymouth);
         System.out.println("Ob registered with building");
         
-        System.out.println("Creating & adding a new floor");
-        Floor babbageF0 = new Floor(0);
-        babbage.addFloor(babbageF0);
-        System.out.println("Floor created & added");
-        
         System.out.println("Creating & adding a new room");
-        Room babbageR01 = new LectureHall("01");
-        babbageF0.addRoom(babbageR01);
+        plymouth.getBuilding("Babbage").addRoom(RoomType.LECTURE_HALL, 0, "01");
         System.out.println("Room created & added");
-        
-        System.out.println("Creating a new ob & registering with room");
-        AnObserver roomOb = new AnObserver();
-        babbageR01.registerObserver(roomOb);
+
+        plymouth.getBuilding("Babbage").getRoom(0, "01").registerObserver(plymouth.getBuilding("Babbage"));
         System.out.println("Ob registered with room");
         
         System.out.println("Creating a new person");
-        Card staff = new Security("Jane");
+        Card staff = new Responder("Jane");
         System.out.println(staff.getRole() + " created & added");
         
-        System.out.println("Testing access of " + staff.getRole() + " for a " + babbageR01.getRoomType() +" ("+babbageR01.getState().toString() +")");
-        System.out.println("result:\t" + babbageR01.Access(staff));
+        System.out.println("Testing access of " + staff.getRole() + " for a " + 
+                           plymouth.getBuilding("Babbage").getRoom(0, "01").getRoomType() +  " ("+
+                           plymouth.getBuilding("Babbage").getRoom(0, "01").getState().toString() +")");
+        
+        System.out.println("result:\t" + plymouth.getBuilding("Babbage").getRoom(0, "01").Access(staff));
         
         System.out.println("Switching room state...");
         plymouth.setState(new EmergencyState());
         
-        System.out.println("Testing access of " + staff.getRole() + " for a " + babbageR01.getRoomType() +" ("+babbageR01.getState().toString() +")");
-        System.out.println("result:\t" + babbageR01.Access(staff));
+        System.out.println("Testing access of " + staff.getRole() + " for a " + 
+                           plymouth.getBuilding("Babbage").getRoom(0, "01").getRoomType() +" ("+
+                           plymouth.getBuilding("Babbage").getRoom(0, "01").getState().toString() +")");
+        
+        System.out.println("result:\t" + plymouth.getBuilding("Babbage").getRoom(0, "01").Access(staff));
         
         System.out.println("Testing complete");
     }
@@ -80,8 +77,8 @@ public class TestHarness {
     {
         private Boolean _emTriggered = false;
         @Override
-        public void Update() {
-            System.out.println("Emergency state triggered!");
+        public void Update(String s) {
+            System.out.println(s + " Emergency state triggered!");
         }
     }
 }

@@ -20,24 +20,26 @@ import urs.states.States;
  */
 public abstract class Room implements ISubject, IAreaState, IRoom  {
     
-    protected String _roomCode;
+    protected String _roomNumber;
+    protected int _floorNumber;
     protected States _roomState;
     protected RoomTypes.RoomType _roomType;
     protected ArrayList<Roles.Role> _permittedCards = new ArrayList<>();
     
     private final ISubject _subject = new SubjectImplementation();
     
-    public Room(String code){ 
-        this._roomCode = code;
+    public Room(int floorNumber, String roomNumber){ 
+        this._roomNumber = roomNumber;
+        this._floorNumber = floorNumber;
         this._roomState = null;
     }
     
     public String getRoomCode() {
-        return this._roomCode;
+        return this._floorNumber + this._roomNumber;
     }
 
     public void setRoomCode(String _roomCode) {
-        this._roomCode = _roomCode;
+        this._roomNumber = _roomCode;
     }
 
     public RoomTypes.RoomType getRoomType() {
@@ -54,12 +56,16 @@ public abstract class Room implements ISubject, IAreaState, IRoom  {
     public Boolean setState(States s) {
         Boolean result = false;
         if(s != null) {
+            this._roomState = s;
+           if(s.toString() == "Emergency state") 
+           {
+               this.notifyObservers(this._floorNumber + this._roomNumber);
+           }
+            
            this._roomState = s;
            result = true;
         }
-        if(s.toString() == "Emergency state"){
-            this.notifyObservers();
-        }
+        
         return result;
     }
     
@@ -79,8 +85,8 @@ public abstract class Room implements ISubject, IAreaState, IRoom  {
     }
 
     @Override
-    public void notifyObservers() {
-        this._subject.notifyObservers();
+    public void notifyObservers(String roomName) {
+        this._subject.notifyObservers(roomName);
     }
     
 }

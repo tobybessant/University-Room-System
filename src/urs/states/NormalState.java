@@ -43,8 +43,8 @@ public class NormalState implements States {
       
       if(c.isTimeRestricted()){
           LocalTime t = LocalTime.now();
-          c.timeCompare(t);
-          result = true;
+          result = c.timeCompare(t);
+          
       } 
       else {
           result = true;

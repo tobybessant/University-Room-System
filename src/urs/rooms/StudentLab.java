@@ -16,8 +16,8 @@ import urs.states.States;
  */
 public class StudentLab extends Room {
 
-    public StudentLab(String code) {
-        super(code);
+    public StudentLab(int floorNumber, String code) {
+        super( floorNumber, code);
         this.setRoomType(RoomTypes.RoomType.STUDENT_LAB);
         this.setState(new NormalState());
         

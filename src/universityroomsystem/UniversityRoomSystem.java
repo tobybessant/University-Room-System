@@ -6,7 +6,6 @@
 package universityroomsystem;
 
 
-import urs.areas.Floor;
 import urs.areas.Campus;
 import urs.areas.Room;
 import urs.areas.Building;

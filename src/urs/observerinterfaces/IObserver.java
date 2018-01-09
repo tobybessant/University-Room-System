@@ -10,5 +10,5 @@ package urs.observerinterfaces;
  * @author tobybessant
  */
 public interface IObserver {
-    void Update();
+    void Update(String buildingType);
 }

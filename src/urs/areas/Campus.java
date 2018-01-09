@@ -17,7 +17,8 @@ import urs.states.States;
  *
  * @author tobybessant
  */
-public class Campus implements IAreaState, ISubject {
+public class Campus implements IAreaState, ISubject, IObserver {
+    
     private String _campusName;
     private States _campusState;
     
@@ -39,8 +40,11 @@ public class Campus implements IAreaState, ISubject {
         this._campusName = _campusName;
     }
     
-    public Boolean addBuilding(Building b){
+    public Boolean addBuilding(String name, String code){
         Boolean result = false;
+        
+        Building b = new Building(name, code);
+        
         if (null != b)
         {
             if (!this._buildingList.contains(b))
@@ -73,21 +77,39 @@ public class Campus implements IAreaState, ISubject {
         }
         return result;
     }
+    public Building getBuilding(String identifier) {
+        
+        for (Building b : this._buildingList)
+        {
+            if(b.getBuildingName() == identifier || b.getBuildingCode() == identifier){
+                return b;
+            }
+        }
+        return null;
+    }
     
     @Override
     public Boolean setState(States s) {
         Boolean result = false;
         if(s != null) {
             
+            Boolean checkState = false;
+            
+            for(int i = 0; i < this._buildingList.size(); i++){
+                if(this._buildingList.get(i).getState().toString() == "Emergency state"){
+                    checkState = true;
+                }
+            }
+            
+            if(s.toString() == "Emergency state" && !checkState) {
+                this.notifyObservers(this._campusName);
+            }
+            
             for(int i = 0; i < this._buildingList.size(); i++) {
                 this._buildingList.get(i).setState(s);
             }
             
             this._campusState = s;
-            
-            if(s.toString() == "Emergency state"){
-            this.notifyObservers();
-            }
             
             result = true;
         }
@@ -112,8 +134,13 @@ public class Campus implements IAreaState, ISubject {
     }
 
     @Override
-    public void notifyObservers() {
-        this._subject.notifyObservers();
+    public void notifyObservers(String buildingName) {
+        this._subject.notifyObservers(buildingName);
+    }
+
+    @Override
+    public void Update(String buildingType) {
+        this.notifyObservers(this._campusName + ", " + buildingType);
     }
     
 }

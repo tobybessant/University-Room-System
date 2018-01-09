@@ -16,7 +16,7 @@ import urs.observerinterfaces.ISubject;
 public class EmergencyState implements States {
     
     @Override
-    public Boolean Access(Room s, Card c) {     
+    public Boolean Access(Room r, Card c) {     
         Boolean result = false;
 
         switch (c.getRole()) {
@@ -25,9 +25,9 @@ public class EmergencyState implements States {
                 break;
             case RESPONDER:
                 result = true;
+                break;
             default:
                 result = false;
-                break;
         }
         
         return result;

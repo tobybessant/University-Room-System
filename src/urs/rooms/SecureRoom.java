@@ -17,8 +17,8 @@ import urs.states.States;
  */
 public class SecureRoom extends Room {
 
-    public SecureRoom(String code) {
-        super(code);
+    public SecureRoom(int floorNumber, String code) {
+        super(floorNumber, code);
         this.setRoomType(RoomTypes.RoomType.SECURE_ROOM);
         this.setState(new NormalState());
         
