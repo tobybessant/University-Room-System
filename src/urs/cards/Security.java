@@ -18,5 +18,6 @@ public class Security extends Card {
     public Security(String name) {
         this.setName(name);
         this.setRole(Roles.Role.SECURITY);
+        this._timeRestriction.removeTimeRestriction();
     }
 }

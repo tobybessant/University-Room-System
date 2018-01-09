@@ -12,6 +12,7 @@ import urs.areas.Room;
 import urs.cards.Card;
 import urs.cards.Cleaner;
 import urs.cards.Manager;
+import urs.cards.Security;
 import urs.cards.Staff;
 import urs.observerinterfaces.IObserver;
 import urs.rooms.LectureHall;
@@ -49,11 +50,6 @@ public class TestHarness {
         babbage.addFloor(babbageF0);
         System.out.println("Floor created & added");
         
-        System.out.println("Creating a new ob & registering with floor");
-        AnObserver floorOb = new AnObserver();
-        babbageF0.registerObserver(floorOb);
-        System.out.println("Ob registered with floor");
-        
         System.out.println("Creating & adding a new room");
         Room babbageR01 = new LectureHall("01");
         babbageF0.addRoom(babbageR01);
@@ -65,14 +61,14 @@ public class TestHarness {
         System.out.println("Ob registered with room");
         
         System.out.println("Creating a new person");
-        Card staff = new Staff("Jane");
+        Card staff = new Security("Jane");
         System.out.println(staff.getRole() + " created & added");
         
         System.out.println("Testing access of " + staff.getRole() + " for a " + babbageR01.getRoomType() +" ("+babbageR01.getState().toString() +")");
         System.out.println("result:\t" + babbageR01.Access(staff));
         
         System.out.println("Switching room state...");
-        babbageR01.setState(new EmergencyState());
+        plymouth.setState(new EmergencyState());
         
         System.out.println("Testing access of " + staff.getRole() + " for a " + babbageR01.getRoomType() +" ("+babbageR01.getState().toString() +")");
         System.out.println("result:\t" + babbageR01.Access(staff));
@@ -82,10 +78,10 @@ public class TestHarness {
     
     private class AnObserver implements IObserver
     {
-
+        private Boolean _emTriggered = false;
         @Override
         public void Update() {
-            System.out.println("State Change was detected!!!");
+            System.out.println("Emergency state triggered!");
         }
     }
 }

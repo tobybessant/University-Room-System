@@ -6,6 +6,9 @@
 package urs.observerinterfaces;
 
 import java.util.ArrayList;
+import urs.areas.Campus;
+import urs.areas.Room;
+import urs.cards.Card;
 
 /**
  *
@@ -21,7 +24,7 @@ public class SubjectImplementation implements ISubject {
         
         if (o != null)
         {
-                        if (this._observerList == null)
+            if (this._observerList == null)
             {
                 this._observerList = new ArrayList<>();
             }

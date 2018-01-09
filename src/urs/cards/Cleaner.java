@@ -28,10 +28,10 @@ public class Cleaner extends Card {
         this.setName(name);
         this.setRole(Roles.Role.CLEANER);
         
-        this._tr.setStartTime(LocalTime.of(5, 30));
+        this._timeRestriction.setStartTime(LocalTime.of(5, 30));
         this._morningEndTime = (LocalTime.of(10,30));
         this._eveningStartTime = (LocalTime.of(17,30));
-        this._tr.setEndTime(LocalTime.of(22, 30));
+        this._timeRestriction.setEndTime(LocalTime.of(22, 30));
         
     }
     @Override

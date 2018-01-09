@@ -24,6 +24,7 @@ public abstract class Room implements ISubject, IAreaState, IRoom  {
     protected States _roomState;
     protected RoomTypes.RoomType _roomType;
     protected ArrayList<Roles.Role> _permittedCards = new ArrayList<>();
+    
     private final ISubject _subject = new SubjectImplementation();
     
     public Room(String code){ 
@@ -47,7 +48,7 @@ public abstract class Room implements ISubject, IAreaState, IRoom  {
         this._roomType = _roomType;
     }  
     
-    public abstract Boolean IsAllowed(Card c);
+    public abstract Boolean isAllowed(Card c);
     
     @Override
     public Boolean setState(States s) {
@@ -55,6 +56,9 @@ public abstract class Room implements ISubject, IAreaState, IRoom  {
         if(s != null) {
            this._roomState = s;
            result = true;
+        }
+        if(s.toString() == "Emergency state"){
+            this.notifyObservers();
         }
         return result;
     }

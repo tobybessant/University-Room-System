@@ -17,12 +17,13 @@ import urs.states.States;
  *
  * @author tobybessant
  */
-public class Campus implements IAreaState, ISubject, IObserver {
+public class Campus implements IAreaState, ISubject {
     private String _campusName;
     private States _campusState;
     
     private ArrayList<Building> _buildingList;
-    private final ISubject subject = new SubjectImplementation();
+    
+    private final ISubject _subject = new SubjectImplementation();
     
     public Campus(String name) {
         this._campusName = name;
@@ -45,11 +46,6 @@ public class Campus implements IAreaState, ISubject, IObserver {
             if (!this._buildingList.contains(b))
             {
                 result = this._buildingList.add(b);
-                if (result)
-                {
-                    b.registerObserver(this);
-                    this.notifyObservers();
-                }
             }
         }
         return result;
@@ -62,10 +58,7 @@ public class Campus implements IAreaState, ISubject, IObserver {
             if (null != _buildingList && this._buildingList.size() > 0)
             {
                 result = this._buildingList.remove(b);
-                if(result){
-                    b.removeObserver(this);
-                    this.notifyObservers();
-                }
+              
             }
         }
         return result;
@@ -85,10 +78,17 @@ public class Campus implements IAreaState, ISubject, IObserver {
     public Boolean setState(States s) {
         Boolean result = false;
         if(s != null) {
+            
             for(int i = 0; i < this._buildingList.size(); i++) {
                 this._buildingList.get(i).setState(s);
             }
+            
             this._campusState = s;
+            
+            if(s.toString() == "Emergency state"){
+            this.notifyObservers();
+            }
+            
             result = true;
         }
         return result;
@@ -101,26 +101,19 @@ public class Campus implements IAreaState, ISubject, IObserver {
 
     @Override
     public Boolean registerObserver(IObserver o) {
-        Boolean result = this.subject.registerObserver(o);
-        return result;
+        Boolean result;
+        return result = this._subject.registerObserver(o);
     }
 
     @Override
     public Boolean removeObserver(IObserver o) {
-        Boolean result = this.subject.removeObserver(o);
-        return result;
+        Boolean result;
+        return result = this._subject.removeObserver(o);
     }
 
     @Override
     public void notifyObservers() {
-        this.subject.notifyObservers();
+        this._subject.notifyObservers();
     }
-
-    @Override
-    public void Update() {
-        this.notifyObservers();
-    }
-    
-    
     
 }

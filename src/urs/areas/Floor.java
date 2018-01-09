@@ -16,7 +16,7 @@ import urs.states.States;
  *
  * @author tobybessant
  */
-public class Floor implements IAreaState, ISubject, IObserver {
+public class Floor implements IAreaState {
     private int _floorNumber;
     private States _floorState;
     
@@ -44,11 +44,7 @@ public class Floor implements IAreaState, ISubject, IObserver {
             if (!this._roomList.contains(r))
             {
                 result = this._roomList.add(r);
-                if (result)
-                {
-                    r.registerObserver(this);
-                    this.notifyObservers();
-                }
+
             }
         }
         return result;
@@ -61,10 +57,7 @@ public class Floor implements IAreaState, ISubject, IObserver {
             if (null != _roomList && this._roomList.size() > 0)
             {
                 result = this._roomList.remove(r);
-                if(result){
-                    r.removeObserver(this);
-                    this.notifyObservers();
-                }
+ 
             }
         }
         return result;
@@ -88,25 +81,4 @@ public class Floor implements IAreaState, ISubject, IObserver {
         return this._floorState;
     } 
 
-    @Override
-    public Boolean registerObserver(IObserver o) {
-       Boolean result = this._subject.registerObserver(o);
-       return result;
-    }
-
-    @Override
-    public Boolean removeObserver(IObserver o) {
-       Boolean result = this._subject.removeObserver(o);
-       return result;
-    }
-
-    @Override
-    public void notifyObservers() {
-        this._subject.notifyObservers();
-    }
-
-    @Override
-    public void Update() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }

@@ -21,7 +21,7 @@ public class Staff extends Card {
         this.setName(name);
         this.setRole(Roles.Role.STAFF);
         
-        this._tr.setStartTime(LocalTime.parse("05:30:00"));
-        this._tr.setEndTime(LocalTime.parse("23:59:59"));
+        this._timeRestriction.setStartTime(LocalTime.parse("05:30:00"));
+        this._timeRestriction.setEndTime(LocalTime.parse("23:59:59"));
     }
 }

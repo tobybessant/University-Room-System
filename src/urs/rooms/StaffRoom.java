@@ -45,7 +45,7 @@ public class StaffRoom extends Room {
     }
 
     @Override
-    public Boolean IsAllowed(Card c) {
+    public Boolean isAllowed(Card c) {
         return this._permittedCards.contains(c);
     }
     

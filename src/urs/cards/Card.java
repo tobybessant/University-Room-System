@@ -17,10 +17,8 @@ public abstract class Card {
     private String _name;
     private int CardID;
     private Role _role;
-    protected TimeRestriction _tr = new TimeRestriction();
     
-    
-    private Boolean _timeRestricted = true;
+    protected TimeRestriction _timeRestriction = new TimeRestriction();
     
     public String getName() {
         return _name;
@@ -53,15 +51,16 @@ public abstract class Card {
     }
     
     public Boolean isTimeRestricted() {
-        return this._tr.getTimeRestricted();
+        return this._timeRestriction.getTimeRestricted();
     }
     
     public LocalTime getStartTime(){
-        return this._tr.getStartTime();
+        return this._timeRestriction.getStartTime();
     }
     public LocalTime getEndTime() {
-        return this._tr.getEndTime();
+        return this._timeRestriction.getEndTime();
     }
+    
     public Boolean timeCompare(LocalTime currTime){
         
         Boolean result = false;  

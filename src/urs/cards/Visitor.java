@@ -21,7 +21,7 @@ public class Visitor extends Card{
         this.setName(name);
         this.setRole(Roles.Role.VISITOR);
         
-        this._tr.setStartTime(LocalTime.of(8, 30, 00));
-        this._tr.setEndTime(LocalTime.of(22, 00, 00));
+        this._timeRestriction.setStartTime(LocalTime.of(8, 30, 00));
+        this._timeRestriction.setEndTime(LocalTime.of(22, 00, 00));
     }
 }

@@ -34,10 +34,17 @@ public class TimeRestriction {
         return _endTime;
     }
 
-    public void setEndTime(LocalTime _endTime) {
+    public Boolean setEndTime(LocalTime _endTime) {
+        Boolean result = false;
+        
         this._endTime = _endTime;
         this._timeRestricted = true;
+        
+        return result;
     }
-    
+    public Boolean removeTimeRestriction() {
+        Boolean result = false;
+        return result = (this._timeRestricted = false);
+    }
     
 }
