@@ -269,6 +269,8 @@ public class RoomSystemMenu extends javax.swing.JFrame implements IObserver {
         jbtnEmergencyControls = new javax.swing.JButton();
         jbtnActivityLog = new javax.swing.JButton();
         jbtnExitApp = new javax.swing.JButton();
+        jbtnSave = new javax.swing.JButton();
+        jbtnOpen = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("University Room System");
@@ -362,6 +364,20 @@ public class RoomSystemMenu extends javax.swing.JFrame implements IObserver {
             }
         });
 
+        jbtnSave.setText("Save");
+        jbtnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnSaveActionPerformed(evt);
+            }
+        });
+
+        jbtnOpen.setText("Open");
+        jbtnOpen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnOpenActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -369,7 +385,12 @@ public class RoomSystemMenu extends javax.swing.JFrame implements IObserver {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jlblUsersTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jlblUsersTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29)
+                        .addComponent(jbtnSave)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jbtnOpen))
                     .addComponent(jspRoomSystemMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -442,7 +463,11 @@ public class RoomSystemMenu extends javax.swing.JFrame implements IObserver {
                             .addComponent(jbtnExitApp)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jlblUsersTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jlblUsersTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jbtnSave)
+                                .addComponent(jbtnOpen)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jspRoomSystemMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -496,6 +521,22 @@ public class RoomSystemMenu extends javax.swing.JFrame implements IObserver {
         exitApp();
     }//GEN-LAST:event_jbtnExitAppActionPerformed
 
+    private void jbtnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnSaveActionPerformed
+        try {
+            saveUniversityData();
+        } catch (IOException ex) {
+            Logger.getLogger(RoomSystemMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jbtnSaveActionPerformed
+
+    private void jbtnOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnOpenActionPerformed
+        try {
+            loadUniversityData();
+        } catch (IOException ex) {
+            Logger.getLogger(RoomSystemMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jbtnOpenActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -539,6 +580,8 @@ public class RoomSystemMenu extends javax.swing.JFrame implements IObserver {
     private javax.swing.JButton jbtnEditUser;
     private javax.swing.JButton jbtnEmergencyControls;
     private javax.swing.JButton jbtnExitApp;
+    private javax.swing.JButton jbtnOpen;
+    private javax.swing.JButton jbtnSave;
     private javax.swing.JLabel jlblDispID;
     private javax.swing.JLabel jlblDispName;
     private javax.swing.JLabel jlblDispRole;

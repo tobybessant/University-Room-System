@@ -5,10 +5,13 @@
  */
 package universityroomsys.gui;
 
+import java.io.BufferedOutputStream;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.nio.file.Files;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -16,7 +19,10 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -41,6 +47,7 @@ public class EmergencyControls extends javax.swing.JFrame {
     private States _state;
     private Building selectedBuilding;
     private Room selectedRoom;
+    File dir;
     /**
      * Creates new form EmergencyControls
      */
@@ -52,19 +59,19 @@ public class EmergencyControls extends javax.swing.JFrame {
     }
     
     public void refreshBuildingListModel() {
-        buildingListModel.clear();
+        this.buildingListModel.clear();
         
-        for(Building b : uniModel.getBuildingList()){
-            buildingListModel.addElement(b.getBuildingName() + "(" + b.getBuildingCode() + ")");
+        for(Building b : this.uniModel.getBuildingList()){
+            this.buildingListModel.addElement(b.getBuildingName() + "(" + b.getBuildingCode() + ")");
         }
         
     }   
     
     public void refreshRoomListModel() {
-        roomListModel.clear();
+        this.roomListModel.clear();
         
-        for(Room r : selectedBuilding.getRoomList()){
-           roomListModel.addElement(r.getRoomCode() + "(" + r.getRoomType() + ")" );
+        for(Room r : this.selectedBuilding.getRoomList()){
+           this.roomListModel.addElement(r.getRoomCode() + "(" + r.getRoomType() + ")" );
         }
     }
     
@@ -74,7 +81,7 @@ public class EmergencyControls extends javax.swing.JFrame {
     
     private void showSelectedRoom(){
         this.selectedRoom =
-                selectedBuilding.getRoomList().get(jlstEmRoomList.getSelectedIndex());
+                this.selectedBuilding.getRoomList().get(jlstEmRoomList.getSelectedIndex());
         
         jlblDispRoomName.setText(this.selectedRoom.getRoomCode());
         jlblDispRoomType.setText(this.selectedRoom.getRoomType().name());
@@ -82,11 +89,12 @@ public class EmergencyControls extends javax.swing.JFrame {
     }
     private void showSelectedBuilding(){
         this.selectedBuilding =
-                uniModel.getBuildingList().get(jlstEmBuildingList.getSelectedIndex());
+                this.uniModel.getBuildingList().get(jlstEmBuildingList.getSelectedIndex());
         
-        jlblDispBuildingName.setText(uniModel.getBuildingList().get(jlstEmBuildingList.getSelectedIndex()).getBuildingCode());
-        jlblDispNoOfRooms.setText(Integer.toString(uniModel.getBuildingList().get(jlstEmBuildingList.getSelectedIndex()).getRoomList().size()));
-        jlblDispBuildingState.setText(uniModel.getBuildingList().get(jlstEmBuildingList.getSelectedIndex()).getState().toString());
+        jlblDispBuildingName.setText(this.uniModel.getBuildingList().get(jlstEmBuildingList.getSelectedIndex()).getBuildingCode());
+        jlblDispNoOfRooms.setText(Integer.toString(this.uniModel.getBuildingList().get(jlstEmBuildingList.getSelectedIndex()).getRoomList().size()));
+        jlblDispBuildingState.setText(this.uniModel.getBuildingList().get(jlstEmBuildingList.getSelectedIndex()).getState().toString());
+        
         refreshRoomListModel();
     }
     private void setCampus(){
@@ -237,24 +245,48 @@ public class EmergencyControls extends javax.swing.JFrame {
             bw.newLine();
             bw.write("Reason: " + reason);
             bw.newLine();
+            bw.newLine();
             
             bw.close();
             
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy-HH-mm");
             String formattedDateTime = time.format(formatter);
             
-            File dir = new File("EM_" + formattedDateTime);
+            dir = new File("EM_" + formattedDateTime);
             dir.mkdir();
             
             File target = new File( dir.getAbsoluteFile() + "/EM_ActivityLog.txt");
             
             copyFile(file.getAbsoluteFile(),target);
+            
+            saveUniversityData();
                     
         }
         catch(IOException e){
             System.out.println(e);
         }
         
+    }
+    private void saveUniversityData() throws IOException {
+        
+        
+            File dataModel = new File( dir.getAbsoluteFile() + "/EM_UniversityData");
+            
+            try(ObjectOutputStream objOut = new ObjectOutputStream(
+                            new BufferedOutputStream(
+                            new FileOutputStream(dataModel)))) 
+            {
+                objOut.writeObject(uniModel);
+                JOptionPane.showMessageDialog(this, "University data saved.", "Save completed", JOptionPane.INFORMATION_MESSAGE);
+                
+            
+            } 
+            catch (IOException ex) 
+            {
+                Logger.getLogger(RoomSystemMenu.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(this, "Error saving data.", "File save error: " + ex.getMessage(), JOptionPane.ERROR_MESSAGE);
+                
+            }
     }
     public  void copyFile(File from, File to ) throws IOException {
         Files.copy(from.toPath(), to.toPath());

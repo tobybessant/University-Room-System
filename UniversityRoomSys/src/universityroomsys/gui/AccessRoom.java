@@ -70,12 +70,12 @@ public class AccessRoom extends javax.swing.JFrame {
     
     public void setSelectedUser(Card user) {
         this.selectedUser = user;
-        jlblAccessRoomDispName.setText(selectedUser.getName());
-        jlblAccessRoomDispRole.setText(selectedUser.getRole().name());
+        jlblAccessRoomDispName.setText(this.selectedUser.getName());
+        jlblAccessRoomDispRole.setText(this.selectedUser.getRole().name());
     }
     private void showSelectedUser(){
-        jlblAccessRoomDispName.setText(selectedUser.getName());
-        jlblAccessRoomDispRole.setText(selectedUser.getRole().toString());
+        jlblAccessRoomDispName.setText(this.selectedUser.getName());
+        jlblAccessRoomDispRole.setText(this.selectedUser.getRole().toString());
     }
     private void showSelectedRoom(){
         this.selectedRoom =
@@ -93,7 +93,7 @@ public class AccessRoom extends javax.swing.JFrame {
         this.dispose();
     }
     private void accessRoom(){
-        if(selectedRoom.Access(selectedUser)){
+        if(this.selectedRoom.Access(this.selectedUser)){
             jlblAccessRoomAccess.setText("ACCESS GRANTED");
             jlblAccessRoomAccess.setForeground(Color.GREEN);
             accessGranted = true;
@@ -108,10 +108,10 @@ public class AccessRoom extends javax.swing.JFrame {
             
             LocalDateTime time = LocalDateTime.now();
             String dateTime = time.toString();
-            String userNameID = selectedUser.getName() + " (Card ID: "+ selectedUser.getCardID() +")";
-            String buildingCode = selectedBuilding.getBuildingCode();
-            String roomCode = selectedRoom.getRoomCode();
-            String roomState = selectedRoom.getState().toString();
+            String userNameID = this.selectedUser.getName() + " (Card ID: "+ this.selectedUser.getCardID() +")";
+            String buildingCode = this.selectedBuilding.getBuildingCode();
+            String roomCode = this.selectedRoom.getRoomCode();
+            String roomState = this.selectedRoom.getState().toString();
             
             File file = new File("ActivityLog.txt");
             

@@ -1,29 +1,416 @@
+EMERGENCY STATE ACTIVATED: 
+Level: Campus
+2018-01-10T22:34:17.175
+Reason: wakkate
+EMERGENCY STATE ACTIVATED: 
+Level: Building
+2018-01-10T22:34:59.193
+Reason: hai
+EMERGENCY STATE ACTIVATED: 
+Level: Room
+2018-01-10T22:35:26.668
+Reason: roomtest
+EMERGENCY STATE ACTIVATED: 
+Level: Campus
+2018-01-10T22:40:01.036
+Reason: savetest
 
 EMERGENCY STATE ACTIVATED: 
 Level: Campus
-2018-01-10T17:24:22.034
-Reason: Terror
+2018-01-10T22:41:09.139
+Reason: test
+
+OPERATION DETAILS: 
+Delete operation.
+Date: 2018-01-10T22:41:56.402
+User: Jen (Card ID: 6)
+
+OPERATION DETAILS: 
+Delete operation.
+Date: 2018-01-10T22:41:58.148
+User: Jack (Card ID: 5)
+
+OPERATION DETAILS: 
+Delete operation.
+Date: 2018-01-10T22:41:59.449
+User: Jane (Card ID: 4)
+
+OPERATION DETAILS: 
+Delete operation.
+Date: 2018-01-10T22:42:00.600
+User: John (Card ID: 3)
+
 EMERGENCY STATE ACTIVATED: 
-Level: Building
-2018-01-10T17:33:39
-Reason: a
-EMERGENCY STATE ACTIVATED: 
-Level: Building
-2018-01-10T17:33:58.338
-Reason: a
-EMERGENCY STATE ACTIVATED: 
-Level: Building
-2018-01-10T17:34:40.832
-Reason: a
-EMERGENCY STATE ACTIVATED: 
-Level: Room
-2018-01-10T17:34:53
-Reason: a
-EMERGENCY STATE ACTIVATED: 
-Level: Building
-2018-01-10T17:37:54.828
-Reason: \
-EMERGENCY STATE ACTIVATED: 
-Level: Building
-2018-01-10T17:47:46.545
-Reason: terror
+Level: Campus
+2018-01-10T22:42:12.479
+Reason: finaltest
+
+OPERATION DETAILS: 
+Delete operation.
+Date: 2018-01-10T22:43:12.257
+User: Josh (Card ID: 0)
+
+ATTEMPTED ACCESS DETAILS: 
+Date: 2018-01-10T22:43:16.852
+User: hhhh (Card ID: 7)
+Room: RLB204
+State: Emergency state
+Access granted: false
+
+ATTEMPTED ACCESS DETAILS: 
+Date: 2018-01-10T22:43:21.323
+User: hhhh (Card ID: 7)
+Room: RLB002
+State: Emergency state
+Access granted: false
+
+ATTEMPTED ACCESS DETAILS: 
+Date: 2018-01-10T22:43:22.459
+User: hhhh (Card ID: 7)
+Room: RLB001
+State: Emergency state
+Access granted: false
+
+ATTEMPTED ACCESS DETAILS: 
+Date: 2018-01-10T22:43:24.263
+User: hhhh (Card ID: 7)
+Room: SMB003
+State: Emergency state
+Access granted: false
+
+ATTEMPTED ACCESS DETAILS: 
+Date: 2018-01-10T22:43:25.499
+User: hhhh (Card ID: 7)
+Room: SMB003
+State: Emergency state
+Access granted: false
+
+ATTEMPTED ACCESS DETAILS: 
+Date: 2018-01-10T22:43:26.750
+User: hhhh (Card ID: 7)
+Room: SMB002
+State: Emergency state
+Access granted: false
+
+ATTEMPTED ACCESS DETAILS: 
+Date: 2018-01-10T22:43:28.263
+User: hhhh (Card ID: 7)
+Room: SMB001
+State: Emergency state
+Access granted: false
+
+ATTEMPTED ACCESS DETAILS: 
+Date: 2018-01-10T22:43:29.768
+User: hhhh (Card ID: 7)
+Room: BGB001
+State: Emergency state
+Access granted: false
+
+ATTEMPTED ACCESS DETAILS: 
+Date: 2018-01-10T22:43:31.225
+User: hhhh (Card ID: 7)
+Room: BGB101
+State: Emergency state
+Access granted: false
+
+ATTEMPTED ACCESS DETAILS: 
+Date: 2018-01-10T22:43:32.071
+User: hhhh (Card ID: 7)
+Room: BGB002
+State: Emergency state
+Access granted: false
+
+ATTEMPTED ACCESS DETAILS: 
+Date: 2018-01-10T22:43:42.879
+User: Janice (Card ID: 2)
+Room: SMB003
+State: Emergency state
+Access granted: true
+
+ATTEMPTED ACCESS DETAILS: 
+Date: 2018-01-10T22:43:54.369
+User: hhhh (Card ID: 7)
+Room: SMB003
+State: Normal state
+Access granted: false
+
+ATTEMPTED ACCESS DETAILS: 
+Date: 2018-01-10T22:43:57.004
+User: hhhh (Card ID: 7)
+Room: RLB204
+State: Normal state
+Access granted: false
+
+ATTEMPTED ACCESS DETAILS: 
+Date: 2018-01-10T22:43:59.395
+User: hhhh (Card ID: 7)
+Room: RLB002
+State: Normal state
+Access granted: false
+
+ATTEMPTED ACCESS DETAILS: 
+Date: 2018-01-10T22:44:00.722
+User: hhhh (Card ID: 7)
+Room: RLB001
+State: Normal state
+Access granted: false
+
+ATTEMPTED ACCESS DETAILS: 
+Date: 2018-01-10T22:44:02.241
+User: hhhh (Card ID: 7)
+Room: SMB001
+State: Normal state
+Access granted: false
+
+ATTEMPTED ACCESS DETAILS: 
+Date: 2018-01-10T22:44:04.355
+User: hhhh (Card ID: 7)
+Room: BGB002
+State: Normal state
+Access granted: false
+
+ATTEMPTED ACCESS DETAILS: 
+Date: 2018-01-10T22:44:05.616
+User: hhhh (Card ID: 7)
+Room: BGB101
+State: Normal state
+Access granted: false
+
+ATTEMPTED ACCESS DETAILS: 
+Date: 2018-01-10T22:44:10.678
+User: Janice (Card ID: 2)
+Room: SMB003
+State: Normal state
+Access granted: false
+
+ATTEMPTED ACCESS DETAILS: 
+Date: 2018-01-10T22:44:51.346
+User: Jack (Card ID: 5)
+Room: RLB204
+State: Normal state
+Access granted: false
+
+ATTEMPTED ACCESS DETAILS: 
+Date: 2018-01-10T22:44:58.350
+User: Jack (Card ID: 5)
+Room: RLB002
+State: Normal state
+Access granted: false
+
+ATTEMPTED ACCESS DETAILS: 
+Date: 2018-01-10T22:44:59.822
+User: Jack (Card ID: 5)
+Room: RLB002
+State: Normal state
+Access granted: false
+
+ATTEMPTED ACCESS DETAILS: 
+Date: 2018-01-10T22:45:15.609
+User: Jack (Card ID: 5)
+Room: RLB204
+State: Normal state
+Access granted: false
+
+ATTEMPTED ACCESS DETAILS: 
+Date: 2018-01-10T22:45:16.512
+User: Jack (Card ID: 5)
+Room: RLB002
+State: Normal state
+Access granted: false
+
+ATTEMPTED ACCESS DETAILS: 
+Date: 2018-01-10T22:45:18.219
+User: Jack (Card ID: 5)
+Room: BGB101
+State: Normal state
+Access granted: false
+
+ATTEMPTED ACCESS DETAILS: 
+Date: 2018-01-10T22:45:56.487
+User: John (Card ID: 3)
+Room: RLB204
+State: Normal state
+Access granted: true
+
+ATTEMPTED ACCESS DETAILS: 
+Date: 2018-01-10T22:45:58.269
+User: John (Card ID: 3)
+Room: RLB002
+State: Normal state
+Access granted: true
+
+ATTEMPTED ACCESS DETAILS: 
+Date: 2018-01-10T22:46:01.283
+User: John (Card ID: 3)
+Room: BGB002
+State: Normal state
+Access granted: true
+
+ATTEMPTED ACCESS DETAILS: 
+Date: 2018-01-10T22:46:06.880
+User: Jane (Card ID: 4)
+Room: RLB204
+State: Normal state
+Access granted: true
+
+ATTEMPTED ACCESS DETAILS: 
+Date: 2018-01-10T22:46:08.946
+User: Jane (Card ID: 4)
+Room: RLB001
+State: Normal state
+Access granted: true
+
+ATTEMPTED ACCESS DETAILS: 
+Date: 2018-01-10T22:46:11.058
+User: Jane (Card ID: 4)
+Room: BGB101
+State: Normal state
+Access granted: true
+
+ATTEMPTED ACCESS DETAILS: 
+Date: 2018-01-10T22:46:12.300
+User: Jane (Card ID: 4)
+Room: BGB002
+State: Normal state
+Access granted: false
+
+ATTEMPTED ACCESS DETAILS: 
+Date: 2018-01-10T22:46:17.868
+User: Jen (Card ID: 6)
+Room: RLB204
+State: Normal state
+Access granted: false
+
+ATTEMPTED ACCESS DETAILS: 
+Date: 2018-01-10T22:46:21.417
+User: Jen (Card ID: 6)
+Room: RLB002
+State: Normal state
+Access granted: false
+
+ATTEMPTED ACCESS DETAILS: 
+Date: 2018-01-10T22:46:29.168
+User: Josh (Card ID: 0)
+Room: RLB204
+State: Normal state
+Access granted: false
+
+ATTEMPTED ACCESS DETAILS: 
+Date: 2018-01-10T22:46:30.495
+User: Josh (Card ID: 0)
+Room: RLB002
+State: Normal state
+Access granted: false
+
+ATTEMPTED ACCESS DETAILS: 
+Date: 2018-01-10T22:47:03.790
+User: Jen (Card ID: 6)
+Room: RLB204
+State: Normal state
+Access granted: false
+
+ATTEMPTED ACCESS DETAILS: 
+Date: 2018-01-10T22:47:05.354
+User: Jen (Card ID: 6)
+Room: RLB204
+State: Normal state
+Access granted: false
+
+ATTEMPTED ACCESS DETAILS: 
+Date: 2018-01-10T22:47:12.116
+User: Janice (Card ID: 2)
+Room: RLB204
+State: Normal state
+Access granted: false
+
+ATTEMPTED ACCESS DETAILS: 
+Date: 2018-01-10T22:47:16.923
+User: Josh (Card ID: 0)
+Room: RLB204
+State: Normal state
+Access granted: false
+
+ATTEMPTED ACCESS DETAILS: 
+Date: 2018-01-10T22:47:45.153
+User: Jack (Card ID: 5)
+Room: SMB003
+State: Normal state
+Access granted: false
+
+ATTEMPTED ACCESS DETAILS: 
+Date: 2018-01-10T22:48:00.107
+User: Jack (Card ID: 5)
+Room: RLB204
+State: Normal state
+Access granted: false
+
+ATTEMPTED ACCESS DETAILS: 
+Date: 2018-01-10T22:48:04.820
+User: Jack (Card ID: 5)
+Room: RLB002
+State: Normal state
+Access granted: false
+
+ATTEMPTED ACCESS DETAILS: 
+Date: 2018-01-10T22:48:06.909
+User: Jack (Card ID: 5)
+Room: SMB002
+State: Normal state
+Access granted: false
+
+ATTEMPTED ACCESS DETAILS: 
+Date: 2018-01-10T22:48:07.849
+User: Jack (Card ID: 5)
+Room: SMB002
+State: Normal state
+Access granted: false
+
+ATTEMPTED ACCESS DETAILS: 
+Date: 2018-01-10T22:48:39.991
+User: Josh (Card ID: 0)
+Room: RLB204
+State: Normal state
+Access granted: false
+
+ATTEMPTED ACCESS DETAILS: 
+Date: 2018-01-10T22:48:45.619
+User: Janice (Card ID: 2)
+Room: RLB204
+State: Normal state
+Access granted: false
+
+ATTEMPTED ACCESS DETAILS: 
+Date: 2018-01-10T22:48:51.082
+User: John (Card ID: 3)
+Room: SMB003
+State: Normal state
+Access granted: true
+
+ATTEMPTED ACCESS DETAILS: 
+Date: 2018-01-10T22:48:54.099
+User: Jane (Card ID: 4)
+Room: RLB002
+State: Normal state
+Access granted: true
+
+ATTEMPTED ACCESS DETAILS: 
+Date: 2018-01-10T22:48:57.465
+User: Jack (Card ID: 5)
+Room: SMB003
+State: Normal state
+Access granted: false
+
+ATTEMPTED ACCESS DETAILS: 
+Date: 2018-01-10T22:49:01.221
+User: Jen (Card ID: 6)
+Room: BGB101
+State: Normal state
+Access granted: false
+
+ATTEMPTED ACCESS DETAILS: 
+Date: 2018-01-10T22:52:06.583
+User: Jake (Card ID: 1)
+Room: RLB204
+State: Normal state
+Access granted: true
+
