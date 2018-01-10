@@ -5,11 +5,23 @@
  */
 package universityroomsys.gui;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import java.util.Locale;
 import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.text.DateFormatter;
 import universityroomsystem.University;
 import urs.areas.Building;
 import urs.areas.Room;
@@ -85,49 +97,91 @@ public class EmergencyControls extends javax.swing.JFrame {
             String reason = JOptionPane.showInputDialog(this, "Enter the reason: ", "Emergency confirmation", JOptionPane.OK_CANCEL_OPTION);
             
             if(!reason.isEmpty()) {
-                uniModel.getCampus().setState(s);
+                this.uniModel.getCampus().setState(s); 
+                logEmergencyToFile("Campus", reason);
+                JOptionPane.showMessageDialog(this, "The campus is now in emergency mode.", "State change successful", JOptionPane.INFORMATION_MESSAGE);
+
             } else {
                 JOptionPane.showMessageDialog(this, "Please enter a reason.", "Empty Field", JOptionPane.ERROR_MESSAGE);
             }
-        } else {
-            uniModel.getCampus().setState(s);
+        } else if (s.toString() == new NormalState().toString()) {
+            this.uniModel.getCampus().setState(s);
+            JOptionPane.showMessageDialog(this, "The campus is now in normal mode.", "State change successful", JOptionPane.INFORMATION_MESSAGE);
         }
         
         refreshRoomListModel();
     }
     private void setBuilding(){
-        
-        States s = selectState();
-        
-        if (s.toString() == new EmergencyState().toString()){
-            String reason = JOptionPane.showInputDialog(this, "Enter the reason: ", "Emergency confirmation", JOptionPane.OK_CANCEL_OPTION);
+        try {
             
-            if(!reason.isEmpty()) {
-                selectedBuilding.setState(s);
-            } else {
-                JOptionPane.showMessageDialog(this, "Please enter a reason.", "Empty Field", JOptionPane.ERROR_MESSAGE);
+            States s = selectState();
+        
+            if (s.toString() == new EmergencyState().toString()){
+                String reason = JOptionPane.showInputDialog(this, "Enter the reason: ", 
+                                                        "Emergency confirmation", 
+                                                        JOptionPane.OK_CANCEL_OPTION);
+            
+                if(!reason.isEmpty()) {
+                    this.selectedBuilding.setState(s);
+                    logEmergencyToFile("Building",reason);
+                    JOptionPane.showMessageDialog(this, this.selectedBuilding.getBuildingCode() +" is now in emergency mode.",  
+                                           " State change successful", JOptionPane.INFORMATION_MESSAGE);
+                                            
+                } else {
+                    JOptionPane.showMessageDialog(this, "Please enter a reason.", 
+                                                "Empty Field", JOptionPane.ERROR_MESSAGE);
+                }
+            } else if (s.toString() == new NormalState().toString()) {
+                this.selectedBuilding.setState(s);
+                JOptionPane.showMessageDialog(this, this.selectedBuilding.getBuildingName() +" is now in normal mode.", 
+                                          " State change successful", 
+                                          JOptionPane.INFORMATION_MESSAGE);
+            
             }
-        } else {
-            selectedBuilding.setState(s);
+                refreshRoomListModel();
+        } catch (NullPointerException ex){
+            
+            JOptionPane.showMessageDialog(this,"Please select a bulding",
+                                          "No selection", 
+                                          JOptionPane.ERROR_MESSAGE);
         }
-        refreshRoomListModel();
+        
     }
     private void setRoom(){
-        
-        States s = selectState();
+        try{
+            States s = selectState();
         
         if (s.toString() == new EmergencyState().toString()){
-            String reason = JOptionPane.showInputDialog(this, "Enter the reason: ", "Emergency confirmation", JOptionPane.OK_CANCEL_OPTION);
+            String reason = JOptionPane.showInputDialog(this, "Enter the reason: ",
+                                                        "Emergency confirmation", 
+                                                        JOptionPane.OK_CANCEL_OPTION);
             
             if(!reason.isEmpty()) {
-                selectedRoom.setState(s);
+                this.selectedRoom.setState(s);
+                logEmergencyToFile("Room", reason);
+                JOptionPane.showMessageDialog(this, this.selectedBuilding.getBuildingCode() + 
+                                          this.selectedRoom.getRoomCode() + " is now in emergency mode", "State change successful",
+                                            JOptionPane.INFORMATION_MESSAGE);
             } else {
-                JOptionPane.showMessageDialog(this, "Please enter a reason.", "Empty Field", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Please enter a reason.", 
+                                              "Empty Field", JOptionPane.ERROR_MESSAGE);
             }
-        } else {
-            selectedRoom.setState(s);
+        } else if (s.toString() == new NormalState().toString()){
+            
+            this.selectedRoom.setState(s);
+            JOptionPane.showMessageDialog(this, this.selectedBuilding.getBuildingCode() + 
+                                          this.selectedRoom.getRoomCode() + " is now in normal mode.", "State change successful",
+                                            JOptionPane.INFORMATION_MESSAGE);
+            
         }
         refreshRoomListModel();
+        } catch (NullPointerException ex){
+            
+            JOptionPane.showMessageDialog(this, "Please select a bulding",
+                                          "No selection: " + ex.getMessage(), 
+                                          JOptionPane.ERROR_MESSAGE);
+        }
+        
     }
     private States selectState() {
         final JPanel stateSelectPanel = new JPanel();
@@ -155,6 +209,57 @@ public class EmergencyControls extends javax.swing.JFrame {
     private void disposeForm(){
         this.dispose();
     }
+    
+    private void logEmergencyToFile(String whatCalled, String reason){
+        try{
+            
+            LocalDateTime time = LocalDateTime.now();
+            String dateTime = time.toString();
+            
+            if(this.selectedRoom != null){
+                String buildingCode = this.selectedBuilding.getBuildingCode();
+            }
+            
+            if(this.selectedRoom != null){
+                String roomCode = this.selectedRoom.getRoomCode();
+            }
+            
+            File file = new File("ActivityLog.txt");
+            
+            FileWriter fw = new FileWriter(file.getAbsoluteFile(), true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            
+            bw.write("EMERGENCY STATE ACTIVATED: ");
+            bw.newLine();
+            bw.write("Level: " + whatCalled);
+            bw.newLine();
+            bw.write(dateTime);
+            bw.newLine();
+            bw.write("Reason: " + reason);
+            bw.newLine();
+            
+            bw.close();
+            
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy-HH-mm");
+            String formattedDateTime = time.format(formatter);
+            
+            File dir = new File("EM_" + formattedDateTime);
+            dir.mkdir();
+            
+            File target = new File( dir.getAbsoluteFile() + "/EM_ActivityLog.txt");
+            
+            copyFile(file.getAbsoluteFile(),target);
+                    
+        }
+        catch(IOException e){
+            System.out.println(e);
+        }
+        
+    }
+    public  void copyFile(File from, File to ) throws IOException {
+        Files.copy(from.toPath(), to.toPath());
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -188,7 +293,7 @@ public class EmergencyControls extends javax.swing.JFrame {
         jlblRoomState = new javax.swing.JLabel();
         jlblDispRoomState = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jlstEmBuildingList.setModel(buildingListModel);
         jlstEmBuildingList.addMouseListener(new java.awt.event.MouseAdapter() {

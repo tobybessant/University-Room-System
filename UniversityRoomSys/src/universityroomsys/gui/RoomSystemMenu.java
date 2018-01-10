@@ -5,17 +5,33 @@
  */
 package universityroomsys.gui;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import universityroomsystem.University;
 import urs.cards.Card;
-import urs.observerinterfaces.IObserverEmergency;
+import urs.observerinterfaces.IObserver;
 
 /**
  *
  * @author Toby
  */
-public class RoomSystemMenu extends javax.swing.JFrame implements IObserverEmergency {
+public class RoomSystemMenu extends javax.swing.JFrame implements IObserver {
 
     /**
      * Creates new form RoomSystemMenu
@@ -64,6 +80,8 @@ public class RoomSystemMenu extends javax.swing.JFrame implements IObserverEmerg
             
             if(confirm == JOptionPane.YES_OPTION) {
                 
+                logToFile("Delete operation.");
+                
                 uniModel.removeItemAt(position);
                 
             }
@@ -92,6 +110,139 @@ public class RoomSystemMenu extends javax.swing.JFrame implements IObserverEmerg
         
         return result;
     }
+    private void saveUniversityData() throws IOException {
+        JFileChooser objFileDialogue = new JFileChooser();
+        int intDialogResult = JFileChooser.CANCEL_OPTION;
+        intDialogResult = objFileDialogue.showSaveDialog(this);
+        
+        if(intDialogResult == JFileChooser.APPROVE_OPTION){
+            
+            File objFile = objFileDialogue.getSelectedFile();
+            
+            try(ObjectOutputStream objOut = new ObjectOutputStream(
+                            new BufferedOutputStream(
+                            new FileOutputStream(objFile)))) 
+            {
+                objOut.writeObject(uniModel);
+                JOptionPane.showMessageDialog(this, "University data saved.", "Save completed", JOptionPane.INFORMATION_MESSAGE);
+                
+            
+            } 
+            catch (IOException ex) 
+            {
+                Logger.getLogger(RoomSystemMenu.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(this, "Error saving data.", "File save error: " + ex.getMessage(), JOptionPane.ERROR_MESSAGE);
+                
+            }
+        
+        } else {
+            JOptionPane.showMessageDialog(this, "Save operation cancelled.", "Operation aborted", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    private void loadUniversityData() throws IOException {
+        JFileChooser objFileDialogue = new JFileChooser();
+        int intDialogResult = JFileChooser.CANCEL_OPTION;
+        intDialogResult = objFileDialogue.showOpenDialog(this);
+        
+        if(intDialogResult == JFileChooser.APPROVE_OPTION){
+            
+            File objFile = objFileDialogue.getSelectedFile();
+            
+            if(objFile.exists() && objFile.canRead()){
+                
+                try(ObjectInputStream objIn = new ObjectInputStream(
+                            new BufferedInputStream(
+                            new FileInputStream(objFile)))) 
+                {
+                    Object objData = objIn.readObject();
+                    
+                    University objNewUniversity = (University)objData;
+                    
+                    if(objNewUniversity != null){
+                        
+                        ArrayList<IObserver> objUniObservers = uniModel.getObservers();
+                        
+                        for(IObserver currObserver : objUniObservers){
+                            uniModel.removeObserver(currObserver);
+                        }
+                        
+                        for(IObserver currObserver : objUniObservers){
+                            objNewUniversity.registerObserver(currObserver);
+                        }
+                      
+                        uniModel = objNewUniversity;
+                        uniModel.notifyObservers();
+                    } else {
+                        JOptionPane.showMessageDialog(this, "No university data found.", "Error reading file", JOptionPane.ERROR_MESSAGE);
+                    }
+                    
+                }   catch (ClassNotFoundException |IOException | ClassCastException ex) {
+                    JOptionPane.showMessageDialog(this, "Data file could not be read.", "Operation aborted", JOptionPane.ERROR_MESSAGE);
+                }
+                
+            } else {
+                JOptionPane.showMessageDialog(this, "File not found / unreadable", "Error accessing file", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+             JOptionPane.showMessageDialog(this, "Load file cancelled.", "Operation cancelled", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    private void logToFile(String operation){
+        try{
+            Card selectedUser =
+                uniModel.getUserList().get(jlstRoomSystemMenu.getSelectedIndex());
+            
+            LocalDateTime time = LocalDateTime.now();
+            String dateTime = time.toString();
+            String userNameID = selectedUser.getName() + " (Card ID: "+ selectedUser.getCardID() +")";
+            
+            File file = new File("ActivityLog.txt");
+            
+            FileWriter fw = new FileWriter(file.getAbsoluteFile(), true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            
+            
+            //bw.write(content);
+            bw.write("OPERATION DETAILS: ");
+            bw.newLine();
+            bw.write(operation);
+            bw.newLine();
+            bw.write("Date: " + dateTime);
+            bw.newLine();
+            bw.write("User: " + userNameID);
+            bw.newLine();
+            bw.newLine();
+            
+            bw.close();
+        }
+        catch(IOException e){
+            System.out.println(e);
+        }
+        
+    }
+    private void openActivityLog(){
+        try{
+
+        if ((new File("ActivityLog.txt")).exists()) {
+
+            Process p = Runtime
+               .getRuntime()
+               .exec("rundll32 url.dll,FileProtocolHandler ActivityLog.txt");
+            p.waitFor();
+
+        } else {
+
+            System.out.println("File does not exist");
+
+        }
+
+      } catch (Exception ex) {
+        ex.printStackTrace();
+      }
+    }
+    private void exitApp(){
+        System.exit(0);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -116,10 +267,11 @@ public class RoomSystemMenu extends javax.swing.JFrame implements IObserverEmerg
         jbtnDeleteUser = new javax.swing.JButton();
         jbtnAccessRoom = new javax.swing.JButton();
         jbtnEmergencyControls = new javax.swing.JButton();
-        jmuRoomSystemMenu = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
+        jbtnActivityLog = new javax.swing.JButton();
+        jbtnExitApp = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("University Room System");
 
         jlstRoomSystemMenu.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jlstRoomSystemMenu.setModel(userListModel);
@@ -196,10 +348,19 @@ public class RoomSystemMenu extends javax.swing.JFrame implements IObserverEmerg
             }
         });
 
-        jMenu1.setText("File");
-        jmuRoomSystemMenu.add(jMenu1);
+        jbtnActivityLog.setText("Open Activity Log");
+        jbtnActivityLog.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnActivityLogActionPerformed(evt);
+            }
+        });
 
-        setJMenuBar(jmuRoomSystemMenu);
+        jbtnExitApp.setText("Exit");
+        jbtnExitApp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnExitAppActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -223,31 +384,36 @@ public class RoomSystemMenu extends javax.swing.JFrame implements IObserverEmerg
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jlblDispID)
-                            .addComponent(jlblDispName)
+                            .addComponent(jlblUserInformation)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(1, 1, 1)
-                                .addComponent(jlblDispRole))
-                            .addComponent(jlblUserInformation)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jlblDispRole)
+                                    .addComponent(jlblDispName)))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(17, 17, 17)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jbtnAddUser)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jbtnEditUser)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jbtnDeleteUser, javax.swing.GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE))
+                                .addComponent(jbtnDeleteUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(jbtnAccessRoom, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jbtnEmergencyControls, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap())
+                            .addComponent(jbtnEmergencyControls, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jbtnActivityLog)
+                        .addGap(18, 18, 18)
+                        .addComponent(jbtnExitApp)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
+                        .addGap(40, 40, 40)
                         .addComponent(jlblUserInformation)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -269,12 +435,17 @@ public class RoomSystemMenu extends javax.swing.JFrame implements IObserverEmerg
                         .addGap(11, 11, 11)
                         .addComponent(jbtnAccessRoom)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jbtnEmergencyControls, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jbtnEmergencyControls, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jbtnActivityLog)
+                            .addComponent(jbtnExitApp)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
                         .addComponent(jlblUsersTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jspRoomSystemMenu)))
-                .addContainerGap(20, Short.MAX_VALUE))
+                        .addComponent(jspRoomSystemMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -317,6 +488,14 @@ public class RoomSystemMenu extends javax.swing.JFrame implements IObserverEmerg
             objWindow.setVisible(true);
     }//GEN-LAST:event_jbtnEmergencyControlsActionPerformed
 
+    private void jbtnActivityLogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnActivityLogActionPerformed
+        openActivityLog();
+    }//GEN-LAST:event_jbtnActivityLogActionPerformed
+
+    private void jbtnExitAppActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnExitAppActionPerformed
+        exitApp();
+    }//GEN-LAST:event_jbtnExitAppActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -353,12 +532,13 @@ public class RoomSystemMenu extends javax.swing.JFrame implements IObserverEmerg
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu jMenu1;
     private javax.swing.JButton jbtnAccessRoom;
+    private javax.swing.JButton jbtnActivityLog;
     private javax.swing.JButton jbtnAddUser;
     private javax.swing.JButton jbtnDeleteUser;
     private javax.swing.JButton jbtnEditUser;
     private javax.swing.JButton jbtnEmergencyControls;
+    private javax.swing.JButton jbtnExitApp;
     private javax.swing.JLabel jlblDispID;
     private javax.swing.JLabel jlblDispName;
     private javax.swing.JLabel jlblDispRole;
@@ -368,13 +548,12 @@ public class RoomSystemMenu extends javax.swing.JFrame implements IObserverEmerg
     private javax.swing.JLabel jlblUserInformation;
     private java.awt.Label jlblUsersTitle;
     private javax.swing.JList<String> jlstRoomSystemMenu;
-    private javax.swing.JMenuBar jmuRoomSystemMenu;
     private javax.swing.JScrollPane jspRoomSystemMenu;
     // End of variables declaration//GEN-END:variables
 
 
     @Override
-    public void Update(String buildingType) {
+    public void Update() {
         refreshUserListModel();
        
         jlblDispName.setText("");

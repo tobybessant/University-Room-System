@@ -48,6 +48,7 @@ public class AddUser extends javax.swing.JFrame {
         } else {
             role = (String)jcmbAddUserRole.getSelectedItem();
             name = jtxtAddUserName.getText();
+            
             uniModel.addUser(name, role);
             
             disposeForm();

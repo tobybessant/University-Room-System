@@ -14,7 +14,7 @@ import urs.cards.Roles.Role;
  *
  * @author Toby
  */
-public class EditUser extends javax.swing.JFrame {
+public class EditUser extends javax.swing.JFrame  {
 
     private University uniModel;
     private Card selectedUser;
@@ -24,9 +24,6 @@ public class EditUser extends javax.swing.JFrame {
     public EditUser() {
         
         initComponents();
-        
-        
-        
         Role[] roles = Role.values();
         
         for(Role r : roles){
@@ -61,7 +58,7 @@ public class EditUser extends javax.swing.JFrame {
         jbtnEditUserConfirm = new javax.swing.JButton();
         Cancel = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jlblEditUserTitle.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jlblEditUserTitle.setText("Edit User");

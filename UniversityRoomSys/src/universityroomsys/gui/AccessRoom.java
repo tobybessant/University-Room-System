@@ -6,6 +6,13 @@
 package universityroomsys.gui;
 
 import java.awt.Color;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.time.LocalDateTime;
+import static java.time.LocalDateTime.now;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import universityroomsystem.University;
@@ -26,6 +33,8 @@ public class AccessRoom extends javax.swing.JFrame {
     
     private Building selectedBuilding;
     private Room selectedRoom;
+    
+    private Boolean accessGranted;
     /**
      * Creates new form AccessRoom
      */
@@ -33,6 +42,8 @@ public class AccessRoom extends javax.swing.JFrame {
         
         buildingListModel = new DefaultListModel();
         roomListModel = new DefaultListModel();
+        
+        accessGranted = false;
         
         initComponents();
     }
@@ -85,10 +96,52 @@ public class AccessRoom extends javax.swing.JFrame {
         if(selectedRoom.Access(selectedUser)){
             jlblAccessRoomAccess.setText("ACCESS GRANTED");
             jlblAccessRoomAccess.setForeground(Color.GREEN);
+            accessGranted = true;
         } else {
             jlblAccessRoomAccess.setText("ACCESS DENIED");
             jlblAccessRoomAccess.setForeground(Color.RED);
         }
+        logAccessToFile();
+    }
+    private void logAccessToFile(){
+        try{
+            
+            LocalDateTime time = LocalDateTime.now();
+            String dateTime = time.toString();
+            String userNameID = selectedUser.getName() + " (Card ID: "+ selectedUser.getCardID() +")";
+            String buildingCode = selectedBuilding.getBuildingCode();
+            String roomCode = selectedRoom.getRoomCode();
+            String roomState = selectedRoom.getState().toString();
+            
+            File file = new File("ActivityLog.txt");
+            
+            FileWriter fw = new FileWriter(file.getAbsoluteFile(), true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            
+            
+            //bw.write(content);
+            bw.write("ATTEMPTED ACCESS DETAILS: ");
+            bw.newLine();
+            bw.write("Date: " + dateTime);
+            bw.newLine();
+            bw.write("User: " + userNameID);
+            bw.newLine();
+            bw.write("Room: " + buildingCode + roomCode);
+            bw.newLine();
+            bw.write("State: " + roomState);
+            bw.newLine();
+            bw.write("Access granted: " + accessGranted);
+            bw.newLine();
+            bw.newLine();
+            
+            
+            bw.close();
+        }
+        catch(IOException e){
+            System.out.println(e);
+        }
+        
+        accessGranted = false;
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -120,7 +173,9 @@ public class AccessRoom extends javax.swing.JFrame {
         jlblAccessRoomDispRoomType = new javax.swing.JLabel();
         jlblAccessRoomAccess = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Access Room");
+        setName("jfrmAccessRoom"); // NOI18N
 
         jlstBuildingList.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jlstBuildingList.setModel(buildingListModel);
@@ -290,6 +345,8 @@ public class AccessRoom extends javax.swing.JFrame {
                             .addComponent(jbtnAccessRoomSwipe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
+
+        getAccessibleContext().setAccessibleDescription("");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
