@@ -5,19 +5,93 @@
  */
 package universityroomsys.gui;
 
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+import universityroomsystem.University;
+import urs.cards.Card;
+import urs.observerinterfaces.IObserverEmergency;
+
 /**
  *
  * @author Toby
  */
-public class RoomSystemMenu extends javax.swing.JFrame {
+public class RoomSystemMenu extends javax.swing.JFrame implements IObserverEmergency {
 
     /**
      * Creates new form RoomSystemMenu
      */
+    
+    private University uniModel;
+    private DefaultListModel userListModel;
+    
     public RoomSystemMenu() {
+        uniModel = new University();
+        uniModel.createTestData();
+        
+        userListModel = new DefaultListModel();
+        refreshUserListModel();
+        
+        uniModel.registerObserver(this);
+        
         initComponents();
     }
 
+    private void refreshUserListModel(){
+        userListModel.clear();
+        for(Card c : uniModel.getUserList()){
+            userListModel.addElement(c.getName());
+        }
+    }
+    private void showSelectedUser(){
+        Card selectedUser =
+                uniModel.getUserList().get(jlstRoomSystemMenu.getSelectedIndex());
+        jlblDispName.setText(selectedUser.getName());
+        jlblDispID.setText(selectedUser.getCardID());
+        jlblDispRole.setText(selectedUser.getRole().toString());
+    }
+    private void deleteSelectedUser(){
+        int position = jlstRoomSystemMenu.getSelectedIndex();
+        if(position == -1){
+            JOptionPane.showMessageDialog(this, "Please select a user", "No selection", JOptionPane.ERROR_MESSAGE);
+        } else {
+            
+            Card selectedUser = uniModel.getUserList().get(position);
+            
+            int confirm = JOptionPane.showConfirmDialog(this, 
+                          "Are you sure you want to delete " + 
+                           selectedUser.getName(), "Confirm delete", 
+                           JOptionPane.YES_NO_OPTION);
+            
+            if(confirm == JOptionPane.YES_OPTION) {
+                
+                uniModel.removeItemAt(position);
+                
+            }
+        }
+    }
+    private void editSelectedUser(){
+        if(validSelection()){
+            
+            EditUser objWindow = new EditUser();
+            objWindow.setUniversity(uniModel);
+            objWindow.setSelectedUser(uniModel.getUserList().get(jlstRoomSystemMenu.getSelectedIndex()));
+            objWindow.setVisible(true);
+            
+        }
+    }
+    private Boolean validSelection(){
+        Boolean result = false;
+        
+        int position = jlstRoomSystemMenu.getSelectedIndex();
+        if(position == -1){
+            JOptionPane.showMessageDialog(this, "Please select a user", "No selection", JOptionPane.ERROR_MESSAGE);
+            result = false;
+        } else {
+            result = true;
+        }
+        
+        return result;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,21 +101,221 @@ public class RoomSystemMenu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jspRoomSystemMenu = new javax.swing.JScrollPane();
+        jlstRoomSystemMenu = new javax.swing.JList<>();
+        jlblUsersTitle = new java.awt.Label();
+        jlblUserInformation = new javax.swing.JLabel();
+        jlblInfoName = new javax.swing.JLabel();
+        jlblDispName = new javax.swing.JLabel();
+        jlblInfoID = new javax.swing.JLabel();
+        jlblDispID = new javax.swing.JLabel();
+        jlblInfoRole = new javax.swing.JLabel();
+        jlblDispRole = new javax.swing.JLabel();
+        jbtnAddUser = new javax.swing.JButton();
+        jbtnEditUser = new javax.swing.JButton();
+        jbtnDeleteUser = new javax.swing.JButton();
+        jbtnAccessRoom = new javax.swing.JButton();
+        jbtnEmergencyControls = new javax.swing.JButton();
+        jmuRoomSystemMenu = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jlstRoomSystemMenu.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jlstRoomSystemMenu.setModel(userListModel);
+        jlstRoomSystemMenu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jlstRoomSystemMenuMouseClicked(evt);
+            }
+        });
+        jspRoomSystemMenu.setViewportView(jlstRoomSystemMenu);
+
+        jlblUsersTitle.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jlblUsersTitle.setText("Users");
+
+        jlblUserInformation.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jlblUserInformation.setText("User Information");
+
+        jlblInfoName.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jlblInfoName.setText("Name:");
+
+        jlblDispName.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jlblDispName.setText("Please select a user.");
+
+        jlblInfoID.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jlblInfoID.setText("ID:");
+
+        jlblDispID.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jlblDispID.setText("Please select a user.");
+
+        jlblInfoRole.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jlblInfoRole.setText("Role:");
+
+        jlblDispRole.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jlblDispRole.setText("Please select a user.");
+
+        jbtnAddUser.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jbtnAddUser.setText("Add");
+        jbtnAddUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnAddUserActionPerformed(evt);
+            }
+        });
+
+        jbtnEditUser.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jbtnEditUser.setText("Edit");
+        jbtnEditUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnEditUserActionPerformed(evt);
+            }
+        });
+
+        jbtnDeleteUser.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jbtnDeleteUser.setText("Delete");
+        jbtnDeleteUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnDeleteUserActionPerformed(evt);
+            }
+        });
+
+        jbtnAccessRoom.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jbtnAccessRoom.setText("Access Room");
+        jbtnAccessRoom.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnAccessRoomActionPerformed(evt);
+            }
+        });
+
+        jbtnEmergencyControls.setBackground(new java.awt.Color(240, 0, 0));
+        jbtnEmergencyControls.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jbtnEmergencyControls.setForeground(new java.awt.Color(255, 255, 255));
+        jbtnEmergencyControls.setText("Emergency Controls");
+        jbtnEmergencyControls.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnEmergencyControlsActionPerformed(evt);
+            }
+        });
+
+        jMenu1.setText("File");
+        jmuRoomSystemMenu.add(jMenu1);
+
+        setJMenuBar(jmuRoomSystemMenu);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jlblUsersTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jspRoomSystemMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jlblInfoName)
+                                .addComponent(jlblInfoID))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(9, 9, 9)
+                                .addComponent(jlblInfoRole)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jlblDispID)
+                            .addComponent(jlblDispName)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(1, 1, 1)
+                                .addComponent(jlblDispRole))
+                            .addComponent(jlblUserInformation)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jbtnAddUser)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jbtnEditUser)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jbtnDeleteUser, javax.swing.GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE))
+                            .addComponent(jbtnAccessRoom, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jbtnEmergencyControls, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addComponent(jlblUserInformation)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jlblInfoName)
+                            .addComponent(jlblDispName))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jlblInfoID)
+                            .addComponent(jlblDispID))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jlblInfoRole)
+                            .addComponent(jlblDispRole))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jbtnAddUser)
+                            .addComponent(jbtnEditUser)
+                            .addComponent(jbtnDeleteUser))
+                        .addGap(11, 11, 11)
+                        .addComponent(jbtnAccessRoom)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jbtnEmergencyControls, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jlblUsersTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jspRoomSystemMenu)))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jlstRoomSystemMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlstRoomSystemMenuMouseClicked
+        showSelectedUser();
+    }//GEN-LAST:event_jlstRoomSystemMenuMouseClicked
+
+    private void jbtnDeleteUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnDeleteUserActionPerformed
+        deleteSelectedUser();
+    }//GEN-LAST:event_jbtnDeleteUserActionPerformed
+
+    private void jbtnAddUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAddUserActionPerformed
+        AddUser objWindow = new AddUser();
+        objWindow.setUniversity(uniModel);
+        objWindow.setVisible(true);
+    }//GEN-LAST:event_jbtnAddUserActionPerformed
+
+    private void jbtnEditUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnEditUserActionPerformed
+        editSelectedUser();
+    }//GEN-LAST:event_jbtnEditUserActionPerformed
+
+    private void jbtnAccessRoomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAccessRoomActionPerformed
+        if(validSelection()) {
+            AccessRoom objWindow = new AccessRoom();
+            objWindow.setUniversity(uniModel);
+            objWindow.setSelectedUser(uniModel.getUserList().get(jlstRoomSystemMenu.getSelectedIndex()));
+            objWindow.refreshBuildingListModel();
+            objWindow.setVisible(true);
+        }
+        
+        
+    }//GEN-LAST:event_jbtnAccessRoomActionPerformed
+
+    private void jbtnEmergencyControlsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnEmergencyControlsActionPerformed
+        EmergencyControls objWindow = new EmergencyControls();
+            objWindow.setUniversity(uniModel);
+            objWindow.refreshBuildingListModel();
+            objWindow.setVisible(true);
+    }//GEN-LAST:event_jbtnEmergencyControlsActionPerformed
 
     /**
      * @param args the command line arguments
@@ -79,5 +353,32 @@ public class RoomSystemMenu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JButton jbtnAccessRoom;
+    private javax.swing.JButton jbtnAddUser;
+    private javax.swing.JButton jbtnDeleteUser;
+    private javax.swing.JButton jbtnEditUser;
+    private javax.swing.JButton jbtnEmergencyControls;
+    private javax.swing.JLabel jlblDispID;
+    private javax.swing.JLabel jlblDispName;
+    private javax.swing.JLabel jlblDispRole;
+    private javax.swing.JLabel jlblInfoID;
+    private javax.swing.JLabel jlblInfoName;
+    private javax.swing.JLabel jlblInfoRole;
+    private javax.swing.JLabel jlblUserInformation;
+    private java.awt.Label jlblUsersTitle;
+    private javax.swing.JList<String> jlstRoomSystemMenu;
+    private javax.swing.JMenuBar jmuRoomSystemMenu;
+    private javax.swing.JScrollPane jspRoomSystemMenu;
     // End of variables declaration//GEN-END:variables
+
+
+    @Override
+    public void Update(String buildingType) {
+        refreshUserListModel();
+       
+        jlblDispName.setText("");
+        jlblDispID.setText("");
+        jlblDispRole.setText("");
+    }
 }
