@@ -1,0 +1,47 @@
+EMERGENCY STATE ACTIVATED: 
+Level: Campus
+2018-01-10T22:34:17.175
+Reason: wakkate
+EMERGENCY STATE ACTIVATED: 
+Level: Building
+2018-01-10T22:34:59.193
+Reason: hai
+EMERGENCY STATE ACTIVATED: 
+Level: Room
+2018-01-10T22:35:26.668
+Reason: roomtest
+EMERGENCY STATE ACTIVATED: 
+Level: Campus
+2018-01-10T22:40:01.036
+Reason: savetest
+
+EMERGENCY STATE ACTIVATED: 
+Level: Campus
+2018-01-10T22:41:09.139
+Reason: test
+
+OPERATION DETAILS: 
+Delete operation.
+Date: 2018-01-10T22:41:56.402
+User: Jen (Card ID: 6)
+
+OPERATION DETAILS: 
+Delete operation.
+Date: 2018-01-10T22:41:58.148
+User: Jack (Card ID: 5)
+
+OPERATION DETAILS: 
+Delete operation.
+Date: 2018-01-10T22:41:59.449
+User: Jane (Card ID: 4)
+
+OPERATION DETAILS: 
+Delete operation.
+Date: 2018-01-10T22:42:00.600
+User: John (Card ID: 3)
+
+EMERGENCY STATE ACTIVATED: 
+Level: Campus
+2018-01-10T22:42:12.479
+Reason: finaltest
+
