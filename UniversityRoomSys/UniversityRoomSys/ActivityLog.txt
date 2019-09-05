@@ -428,3 +428,112 @@ Room: SMB204
 State: Normal state
 Access granted: false
 
+ATTEMPTED ACCESS DETAILS: 
+Date: 2018-12-04T22:25:58.338
+User: Jane (Card ID: 4)
+Room: BGB001
+State: Normal state
+Access granted: true
+
+ATTEMPTED ACCESS DETAILS: 
+Date: 2018-12-04T22:26:27.742
+User: Jane (Card ID: 4)
+Room: BGB002
+State: Normal state
+Access granted: false
+
+OPERATION DETAILS: 
+Delete operation.
+Date: 2018-12-04T22:27:02.074
+User: Jen (Card ID: 6)
+
+EMERGENCY STATE ACTIVATED: 
+Level: Room
+2018-12-04T22:27:56.267
+Reason: fire
+
+EMERGENCY STATE ACTIVATED: 
+Level: Building
+2018-12-04T22:28:24.461
+Reason: fire2
+
+ATTEMPTED ACCESS DETAILS: 
+Date: 2019-09-05T11:38:43.197
+User: John (Card ID: 3)
+Room: BGB001
+State: Normal state
+Access granted: true
+
+ATTEMPTED ACCESS DETAILS: 
+Date: 2019-09-05T11:38:46.492
+User: John (Card ID: 3)
+Room: BGB002
+State: Normal state
+Access granted: true
+
+ATTEMPTED ACCESS DETAILS: 
+Date: 2019-09-05T11:38:56.898
+User: Josh (Card ID: 0)
+Room: RLB002
+State: Normal state
+Access granted: false
+
+ATTEMPTED ACCESS DETAILS: 
+Date: 2019-09-05T11:39:00.694
+User: Josh (Card ID: 0)
+Room: RLB001
+State: Normal state
+Access granted: false
+
+ATTEMPTED ACCESS DETAILS: 
+Date: 2019-09-05T11:39:02.036
+User: Josh (Card ID: 0)
+Room: SMB001
+State: Normal state
+Access granted: false
+
+ATTEMPTED ACCESS DETAILS: 
+Date: 2019-09-05T11:39:03.613
+User: Josh (Card ID: 0)
+Room: BGB001
+State: Normal state
+Access granted: false
+
+EMERGENCY STATE ACTIVATED: 
+Level: Building
+2019-09-05T11:39:39.850
+Reason: testing
+
+ATTEMPTED ACCESS DETAILS: 
+Date: 2019-09-05T11:40:02.150
+User: Josh (Card ID: 0)
+Room: SMB003
+State: Emergency state
+Access granted: false
+
+ATTEMPTED ACCESS DETAILS: 
+Date: 2019-09-05T11:40:04.274
+User: Josh (Card ID: 0)
+Room: SMB002
+State: Emergency state
+Access granted: false
+
+ATTEMPTED ACCESS DETAILS: 
+Date: 2019-09-05T11:40:05.319
+User: Josh (Card ID: 0)
+Room: SMB001
+State: Emergency state
+Access granted: false
+
+ATTEMPTED ACCESS DETAILS: 
+Date: 2019-09-05T11:40:07.395
+User: Josh (Card ID: 0)
+Room: RLB204
+State: Normal state
+Access granted: false
+
+EMERGENCY STATE ACTIVATED: 
+Level: Campus
+2019-09-05T11:40:31.344
+Reason: ;
+

@@ -37,7 +37,10 @@ public class EditUser extends javax.swing.JFrame  {
     public void setSelectedUser(Card user) {
         this.selectedUser = user;
         jtxtEditUserName.setText(selectedUser.getName());
+        jcmbEditUserRole.setSelectedItem(selectedUser.getRole().toString());
+        System.out.println(selectedUser.getRole());
     }
+    
     private void disposeForm(){
         this.dispose();
     }
@@ -82,6 +85,11 @@ public class EditUser extends javax.swing.JFrame  {
         });
 
         Cancel.setText("Cancel");
+        Cancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CancelActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -149,6 +157,10 @@ public class EditUser extends javax.swing.JFrame  {
             disposeForm();
         }
     }//GEN-LAST:event_jbtnEditUserConfirmActionPerformed
+
+    private void CancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelActionPerformed
+        disposeForm();
+    }//GEN-LAST:event_CancelActionPerformed
 
     /**
      * @param args the command line arguments

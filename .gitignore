@@ -22,3 +22,7 @@
 hs_err_pid*
 /UniversityRoomSys/UniversityRoomSystemLib/build/
 /UniversityRoomSys/UniversityRoomSystemLib/nbproject/private/
+
+# activity logs & EM state files
+ActivityLog.txt
+EM_*/
